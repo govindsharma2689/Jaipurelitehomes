@@ -15,9 +15,9 @@ const Footer = () => {
           <div>
             <a href="/" className="inline-block mb-6">
               <img 
-                src="/images/logo/logo-white.png" 
+                src="/images/logo/logo-white-trimmed.png" 
                 alt="Jaipur Elite Homes" 
-                className="h-20 md:h-24 w-auto"
+                className="h-16 md:h-20 w-auto"
               />
             </a>
             <p className="text-gray-400 text-sm mb-4">
