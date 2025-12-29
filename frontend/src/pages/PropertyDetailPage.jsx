@@ -201,14 +201,14 @@ const PropertyDetailPage = () => {
               </div>
             </div>
 
-            {/* Location */}
+            {/* Address Section - Without Map */}
             <div className="bg-white rounded-2xl shadow-premium p-8 animate-fade-in-up stagger-3">
               <h2 className="text-2xl font-display font-bold text-gray-800 mb-4">Location</h2>
-              <div className="bg-gray-100 rounded-xl h-64 flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <MapPin size={48} className="mx-auto mb-2 text-[#1e88e5]" />
-                  <p>{property.location}</p>
-                  <p className="text-sm">Jaipur, Rajasthan</p>
+              <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                <MapPin size={24} className="text-[#1e88e5] mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">{property.location}</p>
+                  <p className="text-gray-600">Jaipur, Rajasthan, India</p>
                 </div>
               </div>
             </div>
