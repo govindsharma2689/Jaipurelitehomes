@@ -85,12 +85,7 @@ const Header = () => {
             >
               <User size={18} className="md:w-5 md:h-5 text-gray-600" />
             </button>
-            <a 
-              href="/add-listing" 
-              className="hidden sm:block bg-[#1e88e5] text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md font-medium hover:bg-[#1565c0] transition-colors text-sm md:text-base"
-            >
-              Add Listing
-            </a>
+            {/* Add Listing button removed from public view - only accessible via /admin */}
             <button 
               className="md:hidden p-1.5"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -111,9 +106,6 @@ const Header = () => {
               <a href={`tel:${contactInfo.rentalPhone}`} className="flex items-center gap-2 text-gray-700 font-medium">
                 <Phone size={16} className="text-[#1e88e5]" />
                 {contactInfo.rentalPhone} (Rental Enquiry)
-              </a>
-              <a href="/add-listing" className="bg-[#1e88e5] text-white px-4 py-2 rounded-md font-medium text-center">
-                Add Listing
               </a>
             </nav>
           </div>
