@@ -60,7 +60,7 @@ const ContactSection = () => {
                 <CheckCircle size={40} className="text-green-500" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
-              <p className="text-gray-600">We'll get back to you within 24 hours.</p>
+              <p className="text-gray-600">We will get back to you within 24 hours.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
