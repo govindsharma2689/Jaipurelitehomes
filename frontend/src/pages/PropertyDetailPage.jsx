@@ -450,7 +450,7 @@ const PropertyDetailPage = () => {
                 >
                   <div className="relative h-56 overflow-hidden">
                     <img 
-                      src={prop.image} 
+                      src={prop.images?.[0] || '/images/properties/default-plot.jpg'} 
                       alt={prop.title} 
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                     />
