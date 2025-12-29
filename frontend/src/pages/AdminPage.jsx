@@ -40,10 +40,6 @@ const AdminPage = () => {
     images_count: 1
   });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = async () => {
     try {
       const [propsRes, inqRes, statsRes] = await Promise.all([
