@@ -25,17 +25,29 @@ const PropertiesPage = () => {
     );
   }
 
+  // Helper function to parse price
+  const parsePrice = (priceStr) => {
+    if (priceStr.includes('crore')) {
+      return parseFloat(priceStr.replace(/[^0-9.]/g, '')) * 10000000;
+    } else if (priceStr.includes('lakh')) {
+      return parseFloat(priceStr.replace(/[^0-9.]/g, '')) * 100000;
+    } else if (priceStr.includes('thousand')) {
+      return parseFloat(priceStr.replace(/[^0-9.]/g, '')) * 1000;
+    }
+    return parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
+  };
+
   // Sort
   if (sortBy === 'price-high') {
     filteredProperties.sort((a, b) => {
-      const priceA = parseFloat(a.price.replace(/[^0-9.]/g, '')) || 0;
-      const priceB = parseFloat(b.price.replace(/[^0-9.]/g, '')) || 0;
+      const priceA = parsePrice(a.price);
+      const priceB = parsePrice(b.price);
       return priceB - priceA;
     });
   } else if (sortBy === 'price-low') {
     filteredProperties.sort((a, b) => {
-      const priceA = parseFloat(a.price.replace(/[^0-9.]/g, '')) || 0;
-      const priceB = parseFloat(b.price.replace(/[^0-9.]/g, '')) || 0;
+      const priceA = parsePrice(a.price);
+      const priceB = parsePrice(b.price);
       return priceA - priceB;
     });
   }
