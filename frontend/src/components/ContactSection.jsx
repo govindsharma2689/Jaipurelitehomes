@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send } from 'lucide-react';
+import { Send, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -12,6 +12,7 @@ const ContactSection = () => {
     city: '',
     message: ''
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -22,93 +23,116 @@ const ContactSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
     console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', mobile: '', email: '', city: '', message: '' });
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({ name: '', mobile: '', email: '', city: '', message: '' });
+    }, 3000);
   };
 
   return (
-    <section className="py-16 px-4 bg-gray-50">
-      <div className="max-w-4xl mx-auto">
-        <p className="text-center text-gray-600 mb-4">
-          Contact us today if you'd like to know more about how we help buy, sell or rent your home
-        </p>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
-          Schedule a meeting with our team
-        </h2>
-        <p className="text-gray-600 text-center mb-10">
-          Our experts and developers would love to contribute their expertise and insights to your real estate plans.
-        </p>
+    <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, #1e88e5 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
-              <Input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Your Name"
-                className="w-full"
-              />
+      <div className="max-w-4xl mx-auto relative">
+        <div className="text-center mb-12">
+          <span className="text-[#1e88e5] font-semibold text-sm tracking-wider uppercase">Get in Touch</span>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-800 mt-2 mb-4">
+            Schedule a Meeting
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Our real estate experts are ready to help you find your dream property. 
+            Let's discuss your requirements and make it happen.
+          </p>
+        </div>
+
+        <div className="bg-white rounded-3xl shadow-premium-lg p-8 md:p-10 animate-fade-in-up">
+          {isSubmitted ? (
+            <div className="text-center py-12 animate-scale-in">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle size={40} className="text-green-500" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
+              <p className="text-gray-600">We'll get back to you within 24 hours.</p>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Mobile</label>
-              <Input
-                type="tel"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleChange}
-                placeholder="Your Mobile Number"
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email*</label>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Your Email"
-                required
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">City*</label>
-              <Input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                placeholder="Your City"
-                required
-                className="w-full"
-              />
-            </div>
-          </div>
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-            <Textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Your Message"
-              rows={4}
-              className="w-full"
-            />
-          </div>
-          <Button 
-            type="submit" 
-            className="w-full bg-[#1e88e5] hover:bg-[#1565c0] text-white py-6 text-lg"
-          >
-            <Send className="mr-2" size={18} />
-            Send Email
-          </Button>
-        </form>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">Name</label>
+                  <Input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Name"
+                    className="h-12 bg-gray-50 border-gray-200 focus:border-[#1e88e5] input-premium"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">Mobile</label>
+                  <Input
+                    type="tel"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    placeholder="Your Mobile Number"
+                    className="h-12 bg-gray-50 border-gray-200 focus:border-[#1e88e5] input-premium"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">Email*</label>
+                  <Input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Your Email"
+                    required
+                    className="h-12 bg-gray-50 border-gray-200 focus:border-[#1e88e5] input-premium"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">City*</label>
+                  <Input
+                    type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    placeholder="Your City"
+                    required
+                    className="h-12 bg-gray-50 border-gray-200 focus:border-[#1e88e5] input-premium"
+                  />
+                </div>
+              </div>
+              <div className="mb-6 space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Message</label>
+                <Textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell us about your requirements..."
+                  rows={4}
+                  className="bg-gray-50 border-gray-200 focus:border-[#1e88e5] input-premium"
+                />
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full bg-[#1e88e5] hover:bg-[#1565c0] text-white h-14 text-lg font-semibold btn-premium rounded-xl shadow-lg hover:shadow-xl transition-all"
+              >
+                <Send className="mr-2" size={20} />
+                Send Message
+              </Button>
+            </form>
+          )}
+        </div>
       </div>
     </section>
   );
