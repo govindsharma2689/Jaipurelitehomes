@@ -13,16 +13,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo & About */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <svg viewBox="0 0 60 40" className="w-12 h-8">
-                <path d="M5 35 L30 10 L55 35" fill="none" stroke="#1e88e5" strokeWidth="3" />
-                <path d="M12 35 L30 17 L48 35" fill="none" stroke="#1e88e5" strokeWidth="2" />
-                <line x1="30" y1="10" x2="30" y2="5" stroke="#1e88e5" strokeWidth="2" />
-              </svg>
-              <div>
-                <span className="text-white font-semibold">Jaipur Elite Homes</span>
-              </div>
-            </div>
+            <a href="/" className="inline-block mb-4">
+              <img 
+                src="/images/logo/logo-white.png" 
+                alt="Jaipur Elite Homes" 
+                className="h-14 w-auto"
+              />
+            </a>
             <p className="text-gray-400 text-sm mb-4">
               We have 15+ years of experience in real estate. Your trusted partner for premium properties in Jaipur.
             </p>
