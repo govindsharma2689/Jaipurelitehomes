@@ -179,7 +179,7 @@ const PropertyDetailPage = () => {
               <h2 className="text-2xl font-display font-bold text-gray-800 mb-4">Description</h2>
               <p className="text-gray-600 leading-relaxed">{property.description}</p>
               <p className="text-gray-600 leading-relaxed mt-4">
-                This exceptional property offers an unparalleled living experience in one of Jaipur's most sought-after locations. 
+                Discover the perfect property that matches your lifestyle. From luxurious villas to prime plots. 
                 With meticulous attention to detail and premium finishes throughout, this property represents the perfect blend 
                 of luxury, comfort, and investment potential. The strategic location ensures excellent connectivity to major 
                 landmarks, educational institutions, healthcare facilities, and commercial centers.
