@@ -29,18 +29,22 @@ const Header = () => {
           </div>
           
           {/* Contact Info - Visible on both mobile and desktop */}
-          <div className="flex items-center gap-3 md:gap-6 text-xs md:text-sm">
-            {/* Email - hidden on very small screens, visible from sm */}
-            <a href={`mailto:${contactInfo.email}`} className="hidden sm:flex items-center gap-1 md:gap-2 hover:opacity-80 transition-opacity">
-              <Mail size={12} className="md:w-[14px] md:h-[14px]" />
-              <span className="hidden md:inline">{contactInfo.email}</span>
-              <span className="md:hidden">Email</span>
+          <div className="flex items-center gap-2 md:gap-6 text-xs md:text-sm">
+            {/* Email - hidden on mobile, visible from md */}
+            <a href={`mailto:${contactInfo.email}`} className="hidden md:flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Mail size={14} />
+              {contactInfo.email}
+            </a>
+            {/* Rental Phone */}
+            <a href={`tel:${contactInfo.rentalPhone}`} className="hidden md:flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Phone size={14} />
+              {contactInfo.rentalPhone} (Rental)
             </a>
             {/* Sales Phone with Name - Always visible */}
             <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-1 md:gap-2 hover:opacity-80 transition-opacity">
               <Phone size={12} className="md:w-[14px] md:h-[14px]" />
               <span>{contactInfo.phone}</span>
-              <span className="hidden sm:inline">(Hanuman Meena Ji)</span>
+              <span className="text-white/90">- Hanuman Meena Ji</span>
             </a>
           </div>
         </div>
