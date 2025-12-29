@@ -26,16 +26,11 @@ const PropertyDetailPage = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // Generate multiple images for gallery (simulating multiple property images)
+  // Get property images array
   const getPropertyImages = (property) => {
     if (!property) return [];
-    // Create array of images based on property.images count
-    const images = [property.image];
-    // Add placeholder variations for demo
-    for (let i = 1; i < property.images; i++) {
-      images.push(property.image);
-    }
-    return images;
+    // Now images is already an array in the data
+    return property.images || [];
   };
 
   useEffect(() => {
