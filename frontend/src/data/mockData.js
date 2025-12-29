@@ -50,10 +50,41 @@ export const properties = [
     price: "₹ 2.35 crore",
     description: "This luxury villa located in the prestigious Shikha Vihar area offers an exceptional blend of comfort, modern design, and premium amenities. Built on a 20×60 (1200 sq ft) plot with excellent construction quality.",
     type: "Villas",
-    images: 28,
     featured: true,
     status: "Sales",
-    image: "/images/properties/shikha-vihar.png"
+    images: [
+      "/images/properties/prop-1/image-1.png",
+      "/images/properties/prop-1/image-2.png",
+      "/images/properties/prop-1/image-3.png",
+      "/images/properties/prop-1/image-4.png",
+      "/images/properties/prop-1/image-5.jpg",
+      "/images/properties/prop-1/image-6.png",
+      "/images/properties/prop-1/image-7.png",
+      "/images/properties/prop-1/image-8.png",
+      "/images/properties/prop-1/image-9.png",
+      "/images/properties/prop-1/image-10.png",
+      "/images/properties/prop-1/image-11.png",
+      "/images/properties/prop-1/image-12.png",
+      "/images/properties/prop-1/image-13.png",
+      "/images/properties/prop-1/image-14.png",
+      "/images/properties/prop-1/image-15.png",
+      "/images/properties/prop-1/image-16.png",
+      "/images/properties/prop-1/image-17.png",
+      "/images/properties/prop-1/image-18.png",
+      "/images/properties/prop-1/image-19.png",
+      "/images/properties/prop-1/image-20.png",
+      "/images/properties/prop-1/image-21.png",
+      "/images/properties/prop-1/image-22.png",
+      "/images/properties/prop-1/image-23.png",
+      "/images/properties/prop-1/image-24.png",
+      "/images/properties/prop-1/image-25.png",
+      "/images/properties/prop-1/image-26.png",
+      "/images/properties/prop-1/image-27.png",
+      "/images/properties/prop-1/image-28.png",
+      "/images/properties/prop-1/image-29.png",
+      "/images/properties/prop-1/image-30.png",
+      "/images/properties/prop-1/image-31.png"
+    ]
   },
   {
     id: 2,
@@ -64,10 +95,20 @@ export const properties = [
     price: "₹ 1.95 crore",
     description: "A premium west-facing villa in Arihant Greens, offering modern living with spacious interiors and top-quality amenities. Perfect for families seeking comfort, elegance and connectivity.",
     type: "Villas",
-    images: 7,
     featured: true,
     status: "Sales",
-    image: "/images/properties/arihant-greens.jpg"
+    images: [
+      "/images/properties/prop-2/image-1.jpg",
+      "/images/properties/prop-2/image-2.jpg",
+      "/images/properties/prop-2/image-3.png",
+      "/images/properties/prop-2/image-4.jpg",
+      "/images/properties/prop-2/image-5.png",
+      "/images/properties/prop-2/image-6.jpg",
+      "/images/properties/prop-2/image-7.jpg",
+      "/images/properties/prop-2/image-8.jpg",
+      "/images/properties/prop-2/image-9.png",
+      "/images/properties/prop-2/image-10.png"
+    ]
   },
   {
     id: 3,
@@ -78,10 +119,11 @@ export const properties = [
     price: "₹ 1.25 crore",
     description: "This residential plot located in Jai Ambe Colony, Tilawala, Jagatpura, offers an excellent opportunity for constructing a spacious modern home in one of Jaipur's fastest developing areas.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/default-plot.jpg"
+    ]
   },
   {
     id: 4,
@@ -92,10 +134,15 @@ export const properties = [
     price: "₹ 1.2 crore",
     description: "This beautifully located villa in Adinath Nagar, Sanganer, offers comfortable and premium living in one of Jaipur's most connected areas. Situated near Airport Road.",
     type: "Villas",
-    images: 2,
     featured: true,
     status: "Sales",
-    image: "/images/properties/villa-adinath-nagar.png"
+    images: [
+      "/images/properties/prop-4/image-1.jpg",
+      "/images/properties/prop-4/image-2.png",
+      "/images/properties/prop-4/image-3.png",
+      "/images/properties/prop-4/image-4.png",
+      "/images/properties/prop-4/image-5.png"
+    ]
   },
   {
     id: 5,
@@ -106,10 +153,15 @@ export const properties = [
     price: "₹ 1.1 crore",
     description: "This west-facing commercial plot is located in Suman Enclave, Block H, within the rapidly developing area of Village Dantli, Sanganer, Jaipur.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-5/image-1.png",
+      "/images/properties/prop-5/image-2.png",
+      "/images/properties/prop-5/image-3.jpg",
+      "/images/properties/prop-5/image-4.png",
+      "/images/properties/prop-5/image-5.png"
+    ]
   },
   {
     id: 6,
@@ -120,10 +172,15 @@ export const properties = [
     price: "₹ 86 lakh",
     description: "This residential plot in Scheme Mahal offers an excellent opportunity for building a compact home or making a secure investment in a rapidly developing locality.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-6/image-1.png",
+      "/images/properties/prop-6/image-2.png",
+      "/images/properties/prop-6/image-3.jpg",
+      "/images/properties/prop-6/image-4.png",
+      "/images/properties/prop-6/image-5.png"
+    ]
   },
   {
     id: 7,
@@ -134,10 +191,15 @@ export const properties = [
     price: "₹ 13.5 lakh",
     description: "This east-facing residential plot is located in the well-developed Mangalam City, Vatika, along Tonk Road—one of Jaipur's most prominent and fast-growing corridors. Front road size: 30 ft.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-7/image-1.png",
+      "/images/properties/prop-7/image-2.png",
+      "/images/properties/prop-7/image-3.jpg",
+      "/images/properties/prop-7/image-4.png",
+      "/images/properties/prop-7/image-5.png"
+    ]
   },
   {
     id: 8,
@@ -148,10 +210,15 @@ export const properties = [
     price: "₹ 78,000 per sq. yard",
     description: "A well-shaped residential plot in Ravindra Nagar, ideal for building a premium home. Located in a peaceful and developed neighborhood with easy access to daily amenities.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-8/image-1.png",
+      "/images/properties/prop-8/image-2.png",
+      "/images/properties/prop-8/image-3.jpg",
+      "/images/properties/prop-8/image-4.png",
+      "/images/properties/prop-8/image-5.png"
+    ]
   },
   {
     id: 9,
@@ -162,10 +229,15 @@ export const properties = [
     price: "₹ 75,000 per sq. yard",
     description: "A premium residential plot located in the well-developed Krishna Sagar Colony, one of the most sought-after areas near Patrakar Colony, Jaipur.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/krishna-sagar-colony.jpg"
+    images: [
+      "/images/properties/prop-9/image-1.png",
+      "/images/properties/prop-9/image-2.png",
+      "/images/properties/prop-9/image-3.jpg",
+      "/images/properties/prop-9/image-4.png",
+      "/images/properties/prop-9/image-5.png"
+    ]
   },
   {
     id: 10,
@@ -176,10 +248,15 @@ export const properties = [
     price: "₹ 72,000 per sq. yard",
     description: "This west-facing residential plot is located in the peaceful and developing locality of Dwarkapuri, Village Chak Getor, Sanganer, Jaipur.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/dwarkapuri-plot.jpg"
+    images: [
+      "/images/properties/prop-10/image-1.png",
+      "/images/properties/prop-10/image-2.png",
+      "/images/properties/prop-10/image-3.jpg",
+      "/images/properties/prop-10/image-4.png",
+      "/images/properties/prop-10/image-5.png"
+    ]
   },
   {
     id: 11,
@@ -190,10 +267,15 @@ export const properties = [
     price: "₹ 65,000 per sq. yard",
     description: "Prime corner residential plot in Gayatri Enclave on Goner Road. Ideal for premium home construction with excellent connectivity and a wide open frontage.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-11/image-1.png",
+      "/images/properties/prop-11/image-2.png",
+      "/images/properties/prop-11/image-3.jpg",
+      "/images/properties/prop-11/image-4.png",
+      "/images/properties/prop-11/image-5.png"
+    ]
   },
   {
     id: 12,
@@ -204,10 +286,15 @@ export const properties = [
     price: "₹ 55,000 per sq. yard",
     description: "This residential plot in Royal Enclave, B-Block offers a prime opportunity for building a spacious home in a well-planned and fast-developing locality.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-12/image-1.png",
+      "/images/properties/prop-12/image-2.png",
+      "/images/properties/prop-12/image-3.jpg",
+      "/images/properties/prop-12/image-4.png",
+      "/images/properties/prop-12/image-5.png"
+    ]
   },
   {
     id: 13,
@@ -218,10 +305,15 @@ export const properties = [
     price: "₹ 45,000 per sq. yard",
     description: "A spacious east-facing residential plot in Shriram Nikunj, B-Block. Ideal for building a premium home with excellent vastu and a peaceful, well-connected neighborhood.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-13/image-1.png",
+      "/images/properties/prop-13/image-2.png",
+      "/images/properties/prop-13/image-3.jpg",
+      "/images/properties/prop-13/image-4.png",
+      "/images/properties/prop-13/image-5.png"
+    ]
   },
   {
     id: 14,
@@ -232,10 +324,15 @@ export const properties = [
     price: "₹ 45,000 per sq. yard",
     description: "A well-located residential plot in Sachivalaya Nagar near Chokhi Dhani, ideal for building a spacious home. The area is peaceful, well-connected, and highly suitable for families.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-14/image-1.png",
+      "/images/properties/prop-14/image-2.png",
+      "/images/properties/prop-14/image-3.jpg",
+      "/images/properties/prop-14/image-4.png",
+      "/images/properties/prop-14/image-5.png"
+    ]
   },
   {
     id: 15,
@@ -246,10 +343,15 @@ export const properties = [
     price: "₹ 33,000 per sq. yard",
     description: "A premium North-East corner residential plot located in the prestigious Sanguine Officers Campus, Block D, near Ring Road in Vatika, Jaipur.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/sanguine-officers.jpg"
+    images: [
+      "/images/properties/prop-15/image-1.png",
+      "/images/properties/prop-15/image-2.png",
+      "/images/properties/prop-15/image-3.jpg",
+      "/images/properties/prop-15/image-4.png",
+      "/images/properties/prop-15/image-5.png"
+    ]
   },
   {
     id: 16,
@@ -260,10 +362,15 @@ export const properties = [
     price: "₹ 33,000 per sq. yard",
     description: "Prime North-West corner plot in the premium Sanguine Officers area near Ring Road, ideal for a luxury home or investment with excellent connectivity.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-16/image-1.png",
+      "/images/properties/prop-16/image-2.png",
+      "/images/properties/prop-16/image-3.jpg",
+      "/images/properties/prop-16/image-4.png",
+      "/images/properties/prop-16/image-5.png"
+    ]
   },
   {
     id: 17,
@@ -274,10 +381,15 @@ export const properties = [
     price: "Contact for Price",
     description: "This south-facing residential plot is located in the peaceful and developing locality of Nandpuri 1st, Chak Getor, in Sanganer Tehsil, Jaipur. With a 100-ft. wide road.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/nandpuri-plot.jpg"
+    images: [
+      "/images/properties/prop-17/image-1.png",
+      "/images/properties/prop-17/image-2.png",
+      "/images/properties/prop-17/image-3.png",
+      "/images/properties/prop-17/image-4.png",
+      "/images/properties/prop-17/image-5.jpg"
+    ]
   },
   {
     id: 18,
@@ -288,10 +400,15 @@ export const properties = [
     price: "Contact for Price",
     description: "This residential plot in Rohini Nagar offers a spacious area ideal for constructing a premium home or for long-term investment. With a total area of 600 sq. meters.",
     type: "Plot",
-    images: 2,
     featured: false,
     status: "Sales",
-    image: "/images/properties/default-plot.jpg"
+    images: [
+      "/images/properties/prop-18/image-1.png",
+      "/images/properties/prop-18/image-2.png",
+      "/images/properties/prop-18/image-3.jpg",
+      "/images/properties/prop-18/image-4.png",
+      "/images/properties/prop-18/image-5.png"
+    ]
   }
 ];
 
