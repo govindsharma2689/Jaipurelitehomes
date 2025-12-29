@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { MapPin, Camera, Filter, ChevronDown } from 'lucide-react';
+import { MapPin, Camera, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { properties, areas, propertyCategories } from '../data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const PropertiesPage = () => {
   const [typeFilter, setTypeFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [areaFilter, setAreaFilter] = useState('');
   const [sortBy, setSortBy] = useState('price-high');
+  const [allProperties, setAllProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  let filteredProperties = [...properties];
+  useEffect(() => {
+    fetchProperties();
+  }, []);
 
-  // Apply filters
-  if (categoryFilter) {
-    filteredProperties = filteredProperties.filter(p => 
-      p.type.toLowerCase() === categoryFilter.toLowerCase()
-    );
-  }
-  if (areaFilter) {
-    filteredProperties = filteredProperties.filter(p => 
-      p.area.toLowerCase().includes(areaFilter.toLowerCase())
-    );
-  }
+  const fetchProperties = async () => {
+    try {
+      const res = await axios.get(`${API}/properties`);
+      // Combine backend properties with mock data
+      const backendProps = res.data.map(p => ({
+        ...p,
+        images: p.images_count || 1
+      }));
+      setAllProperties([...backendProps, ...properties]);
+    } catch (error) {
+      // Fallback to mock data if backend fails
+      setAllProperties(properties);
+    }
+    setLoading(false);
+  };
 
   // Helper function to parse price
   const parsePrice = (priceStr) => {
@@ -37,19 +50,25 @@ const PropertiesPage = () => {
     return parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
   };
 
+  let filteredProperties = [...allProperties];
+
+  // Apply filters
+  if (categoryFilter) {
+    filteredProperties = filteredProperties.filter(p => 
+      p.type.toLowerCase() === categoryFilter.toLowerCase()
+    );
+  }
+  if (areaFilter) {
+    filteredProperties = filteredProperties.filter(p => 
+      p.area.toLowerCase().includes(areaFilter.toLowerCase())
+    );
+  }
+
   // Sort
   if (sortBy === 'price-high') {
-    filteredProperties.sort((a, b) => {
-      const priceA = parsePrice(a.price);
-      const priceB = parsePrice(b.price);
-      return priceB - priceA;
-    });
+    filteredProperties.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
   } else if (sortBy === 'price-low') {
-    filteredProperties.sort((a, b) => {
-      const priceA = parsePrice(a.price);
-      const priceB = parsePrice(b.price);
-      return priceA - priceB;
-    });
+    filteredProperties.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
   }
 
   return (
@@ -57,18 +76,23 @@ const PropertiesPage = () => {
       <Header />
       
       {/* Page Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-gray-800">Properties List – All Properties</h1>
+      <div className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white">
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">All Properties</h1>
+          <p className="text-white/80 text-lg">Discover your perfect property from our exclusive listings</p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow p-4 mb-8">
+        <div className="bg-white rounded-2xl shadow-premium p-6 mb-8 animate-fade-in-up">
+          <div className="flex items-center gap-2 mb-4">
+            <SlidersHorizontal size={20} className="text-[#1e88e5]" />
+            <span className="font-semibold text-gray-700">Filters</span>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger>
+              <SelectTrigger className="h-12 bg-gray-50">
                 <SelectValue placeholder="Types" />
               </SelectTrigger>
               <SelectContent>
@@ -78,7 +102,7 @@ const PropertiesPage = () => {
             </Select>
 
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger>
+              <SelectTrigger className="h-12 bg-gray-50">
                 <SelectValue placeholder="Categories" />
               </SelectTrigger>
               <SelectContent>
@@ -89,7 +113,7 @@ const PropertiesPage = () => {
             </Select>
 
             <Select value={areaFilter} onValueChange={setAreaFilter}>
-              <SelectTrigger>
+              <SelectTrigger className="h-12 bg-gray-50">
                 <SelectValue placeholder="Areas" />
               </SelectTrigger>
               <SelectContent className="max-h-60">
@@ -100,7 +124,7 @@ const PropertiesPage = () => {
             </Select>
 
             <Select value="jaipur">
-              <SelectTrigger>
+              <SelectTrigger className="h-12 bg-gray-50">
                 <SelectValue placeholder="Cities" />
               </SelectTrigger>
               <SelectContent>
@@ -109,72 +133,103 @@ const PropertiesPage = () => {
             </Select>
 
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger>
+              <SelectTrigger className="h-12 bg-gray-50">
                 <SelectValue placeholder="Sort By" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="price-high">Price High to Low</SelectItem>
                 <SelectItem value="price-low">Price Low to High</SelectItem>
                 <SelectItem value="newest">Newest first</SelectItem>
-                <SelectItem value="oldest">Oldest first</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
+        {/* Results Count */}
+        <p className="text-gray-600 mb-6">
+          Showing <span className="font-semibold text-gray-800">{filteredProperties.length}</span> properties
+        </p>
+
         {/* Properties Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProperties.map(property => (
-            <a
-              key={property.id}
-              href={`/property/${property.id}`}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group"
-            >
-              <div className="relative">
-                <img 
-                  src={property.image} 
-                  alt={property.title}
-                  className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 left-3 flex gap-2">
-                  {property.featured && (
-                    <span className="bg-green-500 text-white text-xs px-3 py-1 rounded">Featured</span>
-                  )}
-                </div>
-                <div className="absolute top-3 right-3">
-                  <span className="bg-[#1e88e5] text-white text-xs px-3 py-1 rounded">{property.status}</span>
-                </div>
-                <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center">
-                  <div className="flex items-center gap-1 text-white text-xs bg-black/50 px-2 py-1 rounded">
-                    <MapPin size={12} />
-                    <span className="truncate max-w-[150px]">{property.location}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-white text-xs bg-black/50 px-2 py-1 rounded">
-                    <Camera size={12} />
-                    <span>{property.images}</span>
-                  </div>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1,2,3,4,5,6].map(i => (
+              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-premium animate-pulse">
+                <div className="h-52 bg-gray-200"></div>
+                <div className="p-5 space-y-3">
+                  <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-200 rounded"></div>
                 </div>
               </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-800 mb-2 truncate group-hover:text-[#1e88e5] transition-colors">
-                  {property.title}
-                </h3>
-                <p className="text-[#1e88e5] font-bold text-lg mb-2">{property.price}</p>
-                <p className="text-gray-600 text-sm line-clamp-2">{property.description}</p>
-              </div>
-            </a>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProperties.map((property, index) => (
+              <Link
+                key={property.id}
+                to={`/property/${property.id}`}
+                className={`bg-white rounded-2xl overflow-hidden shadow-premium card-premium animate-fade-in-up stagger-${(index % 6) + 1}`}
+              >
+                <div className="relative h-52 img-zoom">
+                  <img 
+                    src={property.image?.startsWith('/api') ? `${BACKEND_URL}${property.image}` : property.image} 
+                    alt={property.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    {property.featured && (
+                      <span className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xs px-3 py-1.5 rounded-full font-medium">
+                        Featured
+                      </span>
+                    )}
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <span className="bg-[#1e88e5] text-white text-xs px-3 py-1.5 rounded-full font-medium">
+                      {property.status}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center">
+                    <div className="flex items-center gap-1.5 text-white text-xs glass-dark px-3 py-1.5 rounded-full">
+                      <MapPin size={12} />
+                      <span className="truncate max-w-[150px]">{property.location}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-white text-xs glass-dark px-3 py-1.5 rounded-full">
+                      <Camera size={12} />
+                      <span>{property.images}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold text-gray-800 mb-2 truncate text-lg">
+                    {property.title}
+                  </h3>
+                  <p className="text-[#1e88e5] font-bold text-xl mb-3">{property.price}</p>
+                  <p className="text-gray-500 text-sm line-clamp-2">{property.description}</p>
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                    <span className="text-sm text-gray-500">{property.type}</span>
+                    <span className="text-[#1e88e5] text-sm font-medium flex items-center gap-1">
+                      View Details <ArrowRight size={14} />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
-        <div className="flex justify-center gap-2 mt-10">
+        <div className="flex justify-center gap-2 mt-12">
           {[1, 2, 3].map(page => (
             <button
               key={page}
-              className={`w-10 h-10 rounded-lg font-medium transition-colors ${
+              className={`w-12 h-12 rounded-xl font-medium transition-all ${
                 page === 1 
-                  ? 'bg-[#1e88e5] text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  ? 'bg-[#1e88e5] text-white shadow-lg' 
+                  : 'bg-white text-gray-700 hover:bg-gray-100 shadow-premium'
               }`}
             >
               {page}
