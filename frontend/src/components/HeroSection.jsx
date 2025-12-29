@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Search, ChevronDown } from 'lucide-react';
-import { areas, propertyCategories } from '../data/mockData';
+import { Search } from 'lucide-react';
+import { areas, propertyCategories, heroData } from '../data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Button } from './ui/button';
 
@@ -10,13 +10,18 @@ const HeroSection = () => {
   const [area, setArea] = useState('');
   const [price, setPrice] = useState('');
 
+  const handleSearch = () => {
+    // In a real app, this would filter properties
+    console.log('Searching:', { activeTab, category, area, price });
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80')`
+          backgroundImage: `url('${heroData.backgroundImage}')`
         }}
       >
         <div className="absolute inset-0 bg-black/30"></div>
@@ -24,16 +29,14 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-          Jaipur Elite Homes
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+          {heroData.title}
         </h1>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl text-white mb-6">
-          Where Dreams Meet Luxury
+        <h2 className="text-2xl md:text-3xl lg:text-4xl text-white mb-6 drop-shadow-md">
+          {heroData.subtitle}
         </h2>
-        <p className="text-white/90 text-sm md:text-base mb-10 max-w-2xl mx-auto">
-          We have 15+ years of experience in real estate. We are recognized for exceeding client 
-          expectations and delivering great results through dedication, ease of process, and 
-          extraordinary services to our clients.
+        <p className="text-white/90 text-sm md:text-base mb-10 max-w-2xl mx-auto drop-shadow">
+          {heroData.description}
         </p>
 
         {/* Search Box */}
@@ -84,7 +87,7 @@ const HeroSection = () => {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Property Area" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-60">
                   {areas.map((a) => (
                     <SelectItem key={a} value={a.toLowerCase().replace(/\s/g, '-')}>{a}</SelectItem>
                   ))}
@@ -102,13 +105,17 @@ const HeroSection = () => {
                   <SelectItem value="0-15">₹ 0 - ₹ 15 lakh</SelectItem>
                   <SelectItem value="15-50">₹ 15 lakh - ₹ 50 lakh</SelectItem>
                   <SelectItem value="50-1cr">₹ 50 lakh - ₹ 1 crore</SelectItem>
-                  <SelectItem value="1cr+">₹ 1 crore+</SelectItem>
+                  <SelectItem value="1cr-2cr">₹ 1 crore - ₹ 2 crore</SelectItem>
+                  <SelectItem value="2cr+">₹ 2 crore+</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="flex items-end">
-              <Button className="w-full bg-[#1e88e5] hover:bg-[#1565c0] text-white py-6">
+              <Button 
+                className="w-full bg-[#1e88e5] hover:bg-[#1565c0] text-white py-6"
+                onClick={handleSearch}
+              >
                 <Search className="mr-2" size={18} />
                 Search
               </Button>

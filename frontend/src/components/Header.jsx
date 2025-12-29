@@ -13,16 +13,16 @@ const Header = () => {
       <div className="bg-[#1e88e5] text-white text-sm">
         <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <a href={contactInfo.social.facebook} className="hover:opacity-80 transition-opacity">
+            <a href={contactInfo.social.facebook} className="hover:opacity-80 transition-opacity" aria-label="Facebook">
               <Facebook size={16} />
             </a>
-            <a href={contactInfo.social.whatsapp} className="hover:opacity-80 transition-opacity">
+            <a href={contactInfo.social.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" aria-label="WhatsApp">
               <MessageCircle size={16} />
             </a>
-            <a href={contactInfo.social.youtube} className="hover:opacity-80 transition-opacity">
+            <a href={contactInfo.social.youtube} className="hover:opacity-80 transition-opacity" aria-label="YouTube">
               <Youtube size={16} />
             </a>
-            <a href={contactInfo.social.instagram} className="hover:opacity-80 transition-opacity">
+            <a href={contactInfo.social.instagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" aria-label="Instagram">
               <Instagram size={16} />
             </a>
           </div>
@@ -76,6 +76,7 @@ const Header = () => {
             <button 
               onClick={() => setIsLoginOpen(true)}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Login"
             >
               <User size={20} className="text-gray-600" />
             </button>
@@ -88,6 +89,7 @@ const Header = () => {
             <button 
               className="md:hidden p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
