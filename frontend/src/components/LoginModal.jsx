@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -10,6 +9,7 @@ import { Checkbox } from './ui/checkbox';
 const LoginModal = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState('login');
   const [userType, setUserType] = useState('user');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -66,9 +66,13 @@ const LoginModal = ({ isOpen, onClose }) => {
                 </Select>
               </div>
               <div className="flex items-center gap-2">
-                <Checkbox id="terms" />
+                <Checkbox 
+                  id="terms" 
+                  checked={agreedToTerms}
+                  onCheckedChange={setAgreedToTerms}
+                />
                 <Label htmlFor="terms" className="text-sm text-gray-600">
-                  I agree with <a href="#" className="text-[#1e88e5]">terms & conditions</a>
+                  I agree with <a href="/terms" className="text-[#1e88e5]">terms & conditions</a>
                 </Label>
               </div>
               <Button className="w-full bg-[#1e88e5] hover:bg-[#1565c0]">Register</Button>
