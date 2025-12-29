@@ -59,8 +59,8 @@ const HeroSection = () => {
             <button
               className={`flex-1 py-5 px-6 font-semibold text-lg transition-all duration-300 ${
                 activeTab === 'sales'
-                  ? 'bg-white text-gray-800'
-                  : 'bg-[#1e88e5] text-white hover:bg-[#1976d2]'
+                  ? 'bg-[#1e88e5] text-white'
+                  : 'bg-white text-gray-800 hover:bg-gray-50'
               }`}
               onClick={() => setActiveTab('sales')}
             >
@@ -69,8 +69,8 @@ const HeroSection = () => {
             <button
               className={`flex-1 py-5 px-6 font-semibold text-lg transition-all duration-300 ${
                 activeTab === 'rentals'
-                  ? 'bg-white text-gray-800'
-                  : 'bg-[#1e88e5] text-white hover:bg-[#1976d2]'
+                  ? 'bg-[#1e88e5] text-white'
+                  : 'bg-white text-gray-800 hover:bg-gray-50'
               }`}
               onClick={() => setActiveTab('rentals')}
             >
