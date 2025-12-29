@@ -18,10 +18,6 @@ const PropertiesPage = () => {
   const [allProperties, setAllProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProperties();
-  }, []);
-
   const fetchProperties = async () => {
     try {
       const res = await axios.get(`${API}/properties`);
@@ -37,6 +33,10 @@ const PropertiesPage = () => {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
 
   // Helper function to parse price
   const parsePrice = (priceStr) => {
