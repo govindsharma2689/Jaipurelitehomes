@@ -3,9 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { 
-  MapPin, Camera, Phone, Mail, Share2, Heart, X, Home, Maximize, 
+  MapPin, Camera, Phone, Mail, Share2, Heart, X, Home, 
   Calendar, Check, ChevronLeft, ChevronRight, MessageCircle, 
-  Building, Ruler, Compass, ArrowRight, Sparkles
+  Building, Ruler, Compass, ArrowRight, Sparkles, ZoomIn
 } from 'lucide-react';
 import { properties, contactInfo } from '../data/mockData';
 import { Button } from '../components/ui/button';
@@ -26,6 +26,18 @@ const PropertyDetailPage = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // Generate multiple images for gallery (simulating multiple property images)
+  const getPropertyImages = (property) => {
+    if (!property) return [];
+    // Create array of images based on property.images count
+    const images = [property.image];
+    // Add placeholder variations for demo
+    for (let i = 1; i < property.images; i++) {
+      images.push(property.image);
+    }
+    return images;
+  };
+
   useEffect(() => {
     const foundProperty = properties.find(p => p.id === parseInt(id));
     if (foundProperty) {
@@ -33,6 +45,16 @@ const PropertyDetailPage = () => {
     }
     window.scrollTo(0, 0);
   }, [id]);
+
+  const propertyImages = property ? getPropertyImages(property) : [];
+
+  const nextImage = () => {
+    setActiveImageIndex((prev) => (prev + 1) % propertyImages.length);
+  };
+
+  const prevImage = () => {
+    setActiveImageIndex((prev) => (prev - 1 + propertyImages.length) % propertyImages.length);
+  };
 
   if (!property) {
     return (
@@ -91,91 +113,144 @@ const PropertyDetailPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Header />
       
-      {/* Hero Section with Image */}
-      <div className="relative">
-        {/* Main Image Container */}
-        <div className="relative h-[50vh] md:h-[65vh] overflow-hidden">
-          <img 
-            src={property.image} 
-            alt={property.title}
-            className="w-full h-full object-cover"
-          />
-          {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
-          
-          {/* Top Actions */}
-          <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
-            {/* Breadcrumb */}
-            <div className="hidden md:flex items-center gap-2 text-sm text-white/80">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <span>/</span>
-              <Link to="/properties" className="hover:text-white transition-colors">Properties</Link>
-              <span>/</span>
-              <span className="text-white truncate max-w-[200px]">{property.type}</span>
-            </div>
+      {/* Breadcrumb */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <Link to="/" className="hover:text-[#1e88e5] transition-colors">Home</Link>
+            <ChevronRight size={14} />
+            <Link to="/properties" className="hover:text-[#1e88e5] transition-colors">Properties</Link>
+            <ChevronRight size={14} />
+            <span className="text-gray-800 font-medium truncate max-w-[200px]">{property.type}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Image Gallery Section - Contained */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Main Image */}
+          <div className="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3] group">
+            <img 
+              src={propertyImages[activeImageIndex]} 
+              alt={property.title}
+              className="w-full h-full object-cover"
+            />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             
+            {/* Navigation Arrows */}
+            {propertyImages.length > 1 && (
+              <>
+                <button 
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-all opacity-0 group-hover:opacity-100"
+                >
+                  <ChevronLeft size={24} className="text-gray-800" />
+                </button>
+                <button 
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-all opacity-0 group-hover:opacity-100"
+                >
+                  <ChevronRight size={24} className="text-gray-800" />
+                </button>
+              </>
+            )}
+
+            {/* Image Counter */}
+            <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
+              {activeImageIndex + 1} / {propertyImages.length}
+            </div>
+
+            {/* Fullscreen Button */}
+            <button 
+              onClick={() => setIsGalleryOpen(true)}
+              className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-white transition-all shadow-lg"
+            >
+              <ZoomIn size={16} />
+              View All Photos
+            </button>
+
+            {/* Badges */}
+            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+              {property.featured && (
+                <span className="bg-gradient-to-r from-emerald-500 to-green-600 text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg">
+                  Featured
+                </span>
+              )}
+              <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg">
+                For {property.status}
+              </span>
+            </div>
+
             {/* Action Buttons */}
-            <div className="flex gap-3 ml-auto">
+            <div className="absolute top-4 right-4 flex gap-2">
               <button 
                 onClick={() => setIsLiked(!isLiked)}
-                className={`backdrop-blur-md bg-white/10 border border-white/20 p-3 rounded-full transition-all hover:scale-110 hover:bg-white/20 ${isLiked ? 'text-red-500' : 'text-white'}`}
+                className={`w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-all ${isLiked ? 'text-red-500' : 'text-gray-600'}`}
               >
-                <Heart size={20} fill={isLiked ? 'currentColor' : 'none'} />
+                <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
               </button>
-              <button className="backdrop-blur-md bg-white/10 border border-white/20 text-white p-3 rounded-full hover:scale-110 hover:bg-white/20 transition-all">
-                <Share2 size={20} />
+              <button className="w-10 h-10 bg-white/90 backdrop-blur-sm text-gray-600 rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-all">
+                <Share2 size={18} />
               </button>
             </div>
           </div>
 
-          {/* Badges */}
-          <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
-            {property.featured && (
-              <span className="bg-gradient-to-r from-emerald-500 to-green-600 text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm">
-                ✨ Featured
-              </span>
-            )}
-            <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm">
-              For {property.status}
-            </span>
+          {/* Thumbnail Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            {[0, 1, 2, 3].map((index) => (
+              <div 
+                key={index}
+                onClick={() => {
+                  if (index < propertyImages.length) {
+                    setActiveImageIndex(index);
+                  } else if (index === 3 && propertyImages.length > 4) {
+                    setIsGalleryOpen(true);
+                  }
+                }}
+                className={`relative rounded-xl overflow-hidden bg-gray-100 aspect-[4/3] cursor-pointer group ${
+                  activeImageIndex === index ? 'ring-4 ring-[#1e88e5]' : ''
+                }`}
+              >
+                <img 
+                  src={propertyImages[index] || property.image} 
+                  alt={`${property.title} - ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {/* Show remaining count on last thumbnail */}
+                {index === 3 && propertyImages.length > 4 && (
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                    <span className="text-white text-xl font-bold">+{propertyImages.length - 4}</span>
+                  </div>
+                )}
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Bottom Content */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-            <div className="max-w-7xl mx-auto">
-              {/* Location Tag */}
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full text-sm mb-4">
-                <MapPin size={16} />
-                <span>{property.location}</span>
-              </div>
-              
-              {/* Title */}
-              <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-4 max-w-3xl leading-tight">
-                {property.title}
-              </h1>
-              
-              {/* Price & Gallery Button */}
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3">
-                  <p className="text-white/70 text-sm">Price</p>
-                  <p className="text-2xl md:text-3xl font-bold text-white">{property.price}</p>
-                </div>
-                <button 
-                  onClick={() => setIsGalleryOpen(true)}
-                  className="flex items-center gap-2 bg-white text-gray-800 px-6 py-4 rounded-2xl font-medium hover:bg-gray-100 transition-all shadow-lg"
-                >
-                  <Camera size={20} />
-                  <span>View {property.images} Photos</span>
-                </button>
-              </div>
+        {/* Property Info Header */}
+        <div className="mt-8 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 text-[#1e88e5] mb-2">
+              <MapPin size={18} />
+              <span className="font-medium">{property.location}</span>
             </div>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-800 mb-4">
+              {property.title}
+            </h1>
+          </div>
+          <div className="lg:text-right">
+            <p className="text-gray-500 text-sm mb-1">Price</p>
+            <p className="text-3xl md:text-4xl font-bold text-[#1e88e5]">{property.price}</p>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="lg:col-span-2 space-y-8">
@@ -375,7 +450,7 @@ const PropertyDetailPage = () => {
                 <Link
                   key={prop.id}
                   to={`/property/${prop.id}`}
-                  className={`group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:border-[#1e88e5]/20 transition-all duration-300 animate-fade-in-up`}
+                  className="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:border-[#1e88e5]/20 transition-all duration-300 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="relative h-56 overflow-hidden">
@@ -412,22 +487,61 @@ const PropertyDetailPage = () => {
 
       {/* Fullscreen Gallery Modal */}
       {isGalleryOpen && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center animate-fade-in">
-          <button 
-            onClick={() => setIsGalleryOpen(false)}
-            className="absolute top-6 right-6 text-white p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
-          >
-            <X size={24} />
-          </button>
-          <div className="max-w-6xl w-full px-4">
+        <div className="fixed inset-0 bg-black z-50 flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-white/10">
+            <div className="text-white">
+              <p className="font-medium">{property.title}</p>
+              <p className="text-white/60 text-sm">{activeImageIndex + 1} of {propertyImages.length} photos</p>
+            </div>
+            <button 
+              onClick={() => setIsGalleryOpen(false)}
+              className="text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Main Image */}
+          <div className="flex-1 flex items-center justify-center relative px-4">
+            {/* Previous Button */}
+            <button 
+              onClick={prevImage}
+              className="absolute left-4 md:left-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+            >
+              <ChevronLeft size={28} />
+            </button>
+
+            {/* Image */}
             <img 
-              src={property.image} 
-              alt={property.title}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-2xl"
+              src={propertyImages[activeImageIndex]} 
+              alt={`${property.title} - ${activeImageIndex + 1}`}
+              className="max-w-full max-h-[70vh] object-contain rounded-lg"
             />
-            <div className="text-center mt-6">
-              <p className="text-white/80">Image 1 of {property.images}</p>
-              <p className="text-white font-medium mt-2">{property.title}</p>
+
+            {/* Next Button */}
+            <button 
+              onClick={nextImage}
+              className="absolute right-4 md:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </div>
+
+          {/* Thumbnails */}
+          <div className="p-4 border-t border-white/10">
+            <div className="flex gap-2 overflow-x-auto justify-center">
+              {propertyImages.map((img, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveImageIndex(index)}
+                  className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all ${
+                    activeImageIndex === index ? 'border-white' : 'border-transparent opacity-50 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
             </div>
           </div>
         </div>
