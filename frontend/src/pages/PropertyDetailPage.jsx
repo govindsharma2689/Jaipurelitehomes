@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { MapPin, Camera, Phone, Mail, Share2, Heart, ChevronLeft, ChevronRight, X, Home, Maximize, Calendar, Check } from 'lucide-react';
+import { 
+  MapPin, Camera, Phone, Mail, Share2, Heart, X, Home, Maximize, 
+  Calendar, Check, ChevronLeft, ChevronRight, MessageCircle, 
+  Building, Ruler, Compass, ArrowRight, Sparkles
+} from 'lucide-react';
 import { properties, contactInfo } from '../data/mockData';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -11,15 +15,16 @@ import { Textarea } from '../components/ui/textarea';
 const PropertyDetailPage = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     message: ''
   });
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
     const foundProperty = properties.find(p => p.id === parseInt(id));
@@ -33,10 +38,19 @@ const PropertyDetailPage = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
-        <div className="flex items-center justify-center h-96">
-          <div className="text-center">
+        <div className="flex items-center justify-center h-[60vh]">
+          <div className="text-center animate-fade-in-up">
+            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Home size={40} className="text-gray-400" />
+            </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Property Not Found</h2>
-            <Link to="/properties" className="text-[#1e88e5] hover:underline">Browse all properties</Link>
+            <p className="text-gray-500 mb-6">The property you are looking for does not exist.</p>
+            <Link 
+              to="/properties" 
+              className="inline-flex items-center gap-2 bg-[#1e88e5] text-white px-6 py-3 rounded-full font-medium hover:bg-[#1565c0] transition-all"
+            >
+              Browse Properties <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
         <Footer />
@@ -48,239 +62,291 @@ const PropertyDetailPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Thank you for your inquiry! We will contact you soon.');
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setFormSubmitted(true);
+    setTimeout(() => {
+      setFormSubmitted(false);
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    }, 3000);
   };
 
   const features = [
-    'Premium Location',
-    'Modern Architecture',
-    'Vastu Compliant',
-    'Gated Community',
-    '24/7 Security',
-    'Power Backup',
-    'Water Supply',
-    'Wide Roads'
+    { icon: Sparkles, label: 'Premium Location' },
+    { icon: Building, label: 'Modern Design' },
+    { icon: Compass, label: 'Vastu Compliant' },
+    { icon: Home, label: 'Gated Community' },
+    { icon: Check, label: '24/7 Security' },
+    { icon: Check, label: 'Power Backup' },
+    { icon: Check, label: 'Water Supply' },
+    { icon: Ruler, label: 'Wide Roads' },
+  ];
+
+  const propertySpecs = [
+    { label: 'Property Type', value: property.type, icon: Home },
+    { label: 'Category', value: 'Premium', icon: Sparkles },
+    { label: 'Photos', value: property.images, icon: Camera },
+    { label: 'Status', value: 'Ready', icon: Calendar },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Header />
       
-      {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Link to="/" className="hover:text-[#1e88e5] transition-colors">Home</Link>
-            <span>/</span>
-            <Link to="/properties" className="hover:text-[#1e88e5] transition-colors">Properties</Link>
-            <span>/</span>
-            <span className="text-gray-800 font-medium truncate max-w-xs">{property.title}</span>
+      {/* Hero Section with Image */}
+      <div className="relative">
+        {/* Main Image Container */}
+        <div className="relative h-[50vh] md:h-[65vh] overflow-hidden">
+          <img 
+            src={property.image} 
+            alt={property.title}
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
+          
+          {/* Top Actions */}
+          <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+            {/* Breadcrumb */}
+            <div className="hidden md:flex items-center gap-2 text-sm text-white/80">
+              <Link to="/" className="hover:text-white transition-colors">Home</Link>
+              <span>/</span>
+              <Link to="/properties" className="hover:text-white transition-colors">Properties</Link>
+              <span>/</span>
+              <span className="text-white truncate max-w-[200px]">{property.type}</span>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3 ml-auto">
+              <button 
+                onClick={() => setIsLiked(!isLiked)}
+                className={`backdrop-blur-md bg-white/10 border border-white/20 p-3 rounded-full transition-all hover:scale-110 hover:bg-white/20 ${isLiked ? 'text-red-500' : 'text-white'}`}
+              >
+                <Heart size={20} fill={isLiked ? 'currentColor' : 'none'} />
+              </button>
+              <button className="backdrop-blur-md bg-white/10 border border-white/20 text-white p-3 rounded-full hover:scale-110 hover:bg-white/20 transition-all">
+                <Share2 size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* Badges */}
+          <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
+            {property.featured && (
+              <span className="bg-gradient-to-r from-emerald-500 to-green-600 text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm">
+                ✨ Featured
+              </span>
+            )}
+            <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg backdrop-blur-sm">
+              For {property.status}
+            </span>
+          </div>
+
+          {/* Bottom Content */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+            <div className="max-w-7xl mx-auto">
+              {/* Location Tag */}
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full text-sm mb-4">
+                <MapPin size={16} />
+                <span>{property.location}</span>
+              </div>
+              
+              {/* Title */}
+              <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-4 max-w-3xl leading-tight">
+                {property.title}
+              </h1>
+              
+              {/* Price & Gallery Button */}
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3">
+                  <p className="text-white/70 text-sm">Price</p>
+                  <p className="text-2xl md:text-3xl font-bold text-white">{property.price}</p>
+                </div>
+                <button 
+                  onClick={() => setIsGalleryOpen(true)}
+                  className="flex items-center gap-2 bg-white text-gray-800 px-6 py-4 rounded-2xl font-medium hover:bg-gray-100 transition-all shadow-lg"
+                >
+                  <Camera size={20} />
+                  <span>View {property.images} Photos</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Hero Image Section */}
-      <div className="relative h-[60vh] overflow-hidden">
-        <img 
-          src={property.image} 
-          alt={property.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-        
-        {/* Image Counter & Gallery Button */}
-        <div className="absolute bottom-6 right-6 flex gap-3">
-          <button 
-            onClick={() => setIsGalleryOpen(true)}
-            className="glass-dark text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-black/70 transition-colors"
-          >
-            <Camera size={18} />
-            <span>{property.images} Photos</span>
-          </button>
-        </div>
-
-        {/* Badges */}
-        <div className="absolute top-6 left-6 flex gap-3">
-          {property.featured && (
-            <span className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium shadow-lg animate-fade-in">
-              Featured
-            </span>
-          )}
-          <span className="bg-[#1e88e5] text-white px-4 py-2 rounded-lg font-medium shadow-lg animate-fade-in stagger-1">
-            {property.status}
-          </span>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="absolute top-6 right-6 flex gap-3">
-          <button 
-            onClick={() => setIsLiked(!isLiked)}
-            className={`glass-dark p-3 rounded-full transition-all ${isLiked ? 'text-red-500' : 'text-white'} hover:scale-110`}
-          >
-            <Heart size={20} fill={isLiked ? 'currentColor' : 'none'} />
-          </button>
-          <button className="glass-dark text-white p-3 rounded-full hover:scale-110 transition-all">
-            <Share2 size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Content */}
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
+          {/* Left Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Title & Price */}
-            <div className="bg-white rounded-2xl shadow-premium p-8 animate-fade-in-up">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
-                <div>
-                  <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-800 mb-3">
-                    {property.title}
-                  </h1>
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <MapPin size={18} className="text-[#1e88e5]" />
-                    <span>{property.location}</span>
+            
+            {/* Quick Specs */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up">
+              {propertySpecs.map((spec, index) => (
+                <div 
+                  key={index}
+                  className="bg-white rounded-2xl p-5 shadow-lg border border-gray-100 hover:shadow-xl hover:border-[#1e88e5]/20 transition-all group"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#1e88e5]/10 to-[#1e88e5]/5 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <spec.icon size={22} className="text-[#1e88e5]" />
                   </div>
+                  <p className="text-gray-500 text-sm">{spec.label}</p>
+                  <p className="font-bold text-gray-800 text-lg">{spec.value}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-3xl md:text-4xl font-bold text-[#1e88e5]">{property.price}</p>
-                  <p className="text-gray-500 text-sm">Asking Price</p>
-                </div>
-              </div>
-
-              {/* Quick Info */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t">
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <Home className="mx-auto mb-2 text-[#1e88e5]" size={24} />
-                  <p className="font-semibold text-gray-800">{property.type}</p>
-                  <p className="text-sm text-gray-500">Property Type</p>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <Maximize className="mx-auto mb-2 text-[#1e88e5]" size={24} />
-                  <p className="font-semibold text-gray-800">Premium</p>
-                  <p className="text-sm text-gray-500">Category</p>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <Camera className="mx-auto mb-2 text-[#1e88e5]" size={24} />
-                  <p className="font-semibold text-gray-800">{property.images}</p>
-                  <p className="text-sm text-gray-500">Photos</p>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <Calendar className="mx-auto mb-2 text-[#1e88e5]" size={24} />
-                  <p className="font-semibold text-gray-800">Ready</p>
-                  <p className="text-sm text-gray-500">Possession</p>
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* Description */}
-            <div className="bg-white rounded-2xl shadow-premium p-8 animate-fade-in-up stagger-1">
-              <h2 className="text-2xl font-display font-bold text-gray-800 mb-4">Description</h2>
-              <p className="text-gray-600 leading-relaxed">{property.description}</p>
-              <p className="text-gray-600 leading-relaxed mt-4">
-                Discover the perfect property that matches your lifestyle. From luxurious villas to prime plots. 
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 animate-fade-in-up">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#1e88e5] to-[#1565c0] rounded-xl flex items-center justify-center">
+                  <Home size={20} className="text-white" />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-gray-800">About This Property</h2>
+              </div>
+              <p className="text-gray-600 leading-relaxed text-lg mb-4">{property.description}</p>
+              <p className="text-gray-600 leading-relaxed">
+                This exceptional property offers an unparalleled living experience in one of Jaipur&apos;s most sought-after locations. 
                 With meticulous attention to detail and premium finishes throughout, this property represents the perfect blend 
                 of luxury, comfort, and investment potential. The strategic location ensures excellent connectivity to major 
                 landmarks, educational institutions, healthcare facilities, and commercial centers.
               </p>
             </div>
 
-            {/* Features */}
-            <div className="bg-white rounded-2xl shadow-premium p-8 animate-fade-in-up stagger-2">
-              <h2 className="text-2xl font-display font-bold text-gray-800 mb-6">Features & Amenities</h2>
+            {/* Features Grid */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 animate-fade-in-up">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
+                  <Check size={20} className="text-white" />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-gray-800">Features & Amenities</h2>
+              </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                    <div className="w-8 h-8 bg-[#1e88e5]/10 rounded-full flex items-center justify-center">
-                      <Check size={16} className="text-[#1e88e5]" />
+                  <div 
+                    key={index} 
+                    className="flex items-center gap-3 p-4 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 hover:border-[#1e88e5]/30 hover:shadow-md transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-[#1e88e5]/10 rounded-xl flex items-center justify-center group-hover:bg-[#1e88e5] transition-colors">
+                      <feature.icon size={18} className="text-[#1e88e5] group-hover:text-white transition-colors" />
                     </div>
-                    <span className="text-gray-700 text-sm font-medium">{feature}</span>
+                    <span className="text-gray-700 font-medium text-sm">{feature.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Address Section - Without Map */}
-            <div className="bg-white rounded-2xl shadow-premium p-8 animate-fade-in-up stagger-3">
-              <h2 className="text-2xl font-display font-bold text-gray-800 mb-4">Location</h2>
-              <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
-                <MapPin size={24} className="text-[#1e88e5] mt-1 flex-shrink-0" />
-                <div>
-                  <p className="font-medium text-gray-800">{property.location}</p>
-                  <p className="text-gray-600">Jaipur, Rajasthan, India</p>
+            {/* Location */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 animate-fade-in-up">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                  <MapPin size={20} className="text-white" />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-gray-800">Location</h2>
+              </div>
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-100">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 bg-[#1e88e5]/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <MapPin size={28} className="text-[#1e88e5]" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800 text-lg">{property.location}</p>
+                    <p className="text-gray-500">{property.area}, Jaipur</p>
+                    <p className="text-gray-400 text-sm mt-1">Rajasthan, India</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Sidebar */}
+          {/* Right Sidebar */}
           <div className="space-y-6">
-            {/* Contact Form */}
-            <div className="bg-white rounded-2xl shadow-premium p-6 sticky top-24 animate-fade-in-up">
-              <h3 className="text-xl font-display font-bold text-gray-800 mb-6">Interested in this property?</h3>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                  type="text"
-                  placeholder="Your Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="input-premium"
-                  required
-                />
-                <Input
-                  type="email"
-                  placeholder="Your Email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="input-premium"
-                  required
-                />
-                <Input
-                  type="tel"
-                  placeholder="Your Phone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="input-premium"
-                />
-                <Textarea
-                  placeholder="I'm interested in this property..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  rows={4}
-                  className="input-premium"
-                />
-                <Button type="submit" className="w-full bg-[#1e88e5] hover:bg-[#1565c0] btn-premium py-6">
-                  Send Inquiry
-                </Button>
-              </form>
+            {/* Contact Card */}
+            <div className="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 sticky top-32 animate-fade-in-up">
+              {formSubmitted ? (
+                <div className="text-center py-8 animate-scale-in">
+                  <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Check size={36} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Thank You!</h3>
+                  <p className="text-gray-500">We will contact you shortly.</p>
+                </div>
+              ) : (
+                <>
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#1e88e5] to-[#1565c0] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <Mail size={28} className="text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800">Interested?</h3>
+                    <p className="text-gray-500 text-sm">Get in touch with us</p>
+                  </div>
+                  
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                      type="text"
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1e88e5] focus:ring-[#1e88e5]/20"
+                      required
+                    />
+                    <Input
+                      type="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1e88e5] focus:ring-[#1e88e5]/20"
+                      required
+                    />
+                    <Input
+                      type="tel"
+                      placeholder="Your Phone"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      className="h-12 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1e88e5] focus:ring-[#1e88e5]/20"
+                    />
+                    <Textarea
+                      placeholder="I am interested in this property..."
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      rows={3}
+                      className="rounded-xl bg-gray-50 border-gray-200 focus:border-[#1e88e5] focus:ring-[#1e88e5]/20"
+                    />
+                    <Button 
+                      type="submit" 
+                      className="w-full h-12 bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1976d2] hover:to-[#1565c0] text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+                    >
+                      Send Inquiry
+                    </Button>
+                  </form>
+                </>
+              )}
 
-              <div className="mt-6 pt-6 border-t space-y-3">
+              {/* Quick Contact */}
+              <div className="mt-6 pt-6 border-t border-gray-100 space-y-3">
                 <a 
                   href={`tel:${contactInfo.phone}`}
-                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                  className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-100 hover:border-[#1e88e5]/30 hover:shadow-md transition-all group"
                 >
-                  <div className="w-10 h-10 bg-[#1e88e5]/10 rounded-full flex items-center justify-center">
-                    <Phone size={18} className="text-[#1e88e5]" />
+                  <div className="w-12 h-12 bg-[#1e88e5]/10 rounded-xl flex items-center justify-center group-hover:bg-[#1e88e5] transition-colors">
+                    <Phone size={20} className="text-[#1e88e5] group-hover:text-white transition-colors" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-800">{contactInfo.phone}</p>
-                    <p className="text-sm text-gray-500">Call us</p>
+                    <p className="font-semibold text-gray-800">{contactInfo.phone}</p>
+                    <p className="text-sm text-gray-500">Call Now</p>
                   </div>
                 </a>
                 <a 
                   href={contactInfo.social.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+                  className="flex items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-100 hover:border-green-300 hover:shadow-md transition-all group"
                 >
-                  <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 text-green-600" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                    </svg>
+                  <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:bg-green-500 transition-colors">
+                    <MessageCircle size={20} className="text-green-600 group-hover:text-white transition-colors" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-800">WhatsApp</p>
+                    <p className="font-semibold text-gray-800">WhatsApp</p>
                     <p className="text-sm text-gray-500">Chat with us</p>
                   </div>
                 </a>
@@ -291,33 +357,51 @@ const PropertyDetailPage = () => {
 
         {/* Similar Properties */}
         {similarProperties.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-3xl font-display font-bold text-gray-800 mb-8">Similar Properties</h2>
+          <div className="mt-20">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <span className="text-[#1e88e5] font-semibold text-sm tracking-wider uppercase">Explore More</span>
+                <h2 className="text-3xl font-display font-bold text-gray-800 mt-1">Similar Properties</h2>
+              </div>
+              <Link 
+                to="/properties"
+                className="hidden md:flex items-center gap-2 text-[#1e88e5] font-medium hover:gap-3 transition-all"
+              >
+                View All <ArrowRight size={18} />
+              </Link>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {similarProperties.map((prop, index) => (
                 <Link
                   key={prop.id}
                   to={`/property/${prop.id}`}
-                  className={`bg-white rounded-2xl overflow-hidden shadow-premium card-premium animate-fade-in-up stagger-${index + 1}`}
+                  className={`group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:border-[#1e88e5]/20 transition-all duration-300 animate-fade-in-up`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="relative h-48 img-zoom">
-                    <img src={prop.image} alt={prop.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 gradient-overlay"></div>
-                    <div className="absolute top-3 right-3">
-                      <span className="bg-[#1e88e5] text-white text-xs px-3 py-1 rounded-full">{prop.status}</span>
+                  <div className="relative h-56 overflow-hidden">
+                    <img 
+                      src={prop.image} 
+                      alt={prop.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-white/90 backdrop-blur-sm text-[#1e88e5] text-xs px-3 py-1.5 rounded-full font-medium">
+                        {prop.status}
+                      </span>
                     </div>
-                    <div className="absolute bottom-3 left-3 text-white">
-                      <p className="text-sm flex items-center gap-1">
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="flex items-center gap-2 text-white text-sm">
                         <MapPin size={14} />
-                        {prop.area}
-                      </p>
+                        <span>{prop.area}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-semibold text-gray-800 mb-2 truncate hover:text-[#1e88e5] transition-colors">
+                    <h3 className="font-semibold text-gray-800 mb-2 truncate group-hover:text-[#1e88e5] transition-colors">
                       {prop.title}
                     </h3>
-                    <p className="text-[#1e88e5] font-bold text-lg">{prop.price}</p>
+                    <p className="text-[#1e88e5] font-bold text-xl">{prop.price}</p>
                   </div>
                 </Link>
               ))}
@@ -331,17 +415,20 @@ const PropertyDetailPage = () => {
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center animate-fade-in">
           <button 
             onClick={() => setIsGalleryOpen(false)}
-            className="absolute top-6 right-6 text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+            className="absolute top-6 right-6 text-white p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
           >
-            <X size={28} />
+            <X size={24} />
           </button>
-          <div className="max-w-5xl w-full px-4">
+          <div className="max-w-6xl w-full px-4">
             <img 
               src={property.image} 
               alt={property.title}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+              className="w-full h-auto max-h-[80vh] object-contain rounded-2xl"
             />
-            <p className="text-white text-center mt-4">Image 1 of {property.images}</p>
+            <div className="text-center mt-6">
+              <p className="text-white/80">Image 1 of {property.images}</p>
+              <p className="text-white font-medium mt-2">{property.title}</p>
+            </div>
           </div>
         </div>
       )}
