@@ -49,7 +49,9 @@ const ContactSection = () => {
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Our real estate experts are ready to help you find your dream property. 
-            Let's discuss your requirements and make it happen.
+            <p className="text-gray-600 max-w-2xl mx-auto">
+            Discover the perfect property that matches your lifestyle. From luxurious villas to prime plots.
+          </p>
           </p>
         </div>
 
