@@ -286,7 +286,7 @@ const AdminPage = () => {
                   {properties.length === 0 ? (
                     <tr>
                       <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
-                        No properties yet. Click "Add Property" to create one.
+                        No properties yet. Click &quot;Add Property&quot; to create one.
                       </td>
                     </tr>
                   ) : (
