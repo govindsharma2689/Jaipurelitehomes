@@ -23,7 +23,9 @@ const PropertyDetailPage = () => {
 
   useEffect(() => {
     const foundProperty = properties.find(p => p.id === parseInt(id));
-    setProperty(foundProperty);
+    if (foundProperty) {
+      setProperty(foundProperty);
+    }
     window.scrollTo(0, 0);
   }, [id]);
 
