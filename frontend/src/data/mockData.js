@@ -132,7 +132,7 @@ export const properties = [
     area: "Mangalam City",
     city: "Jaipur",
     price: "₹ 13.5 lakh",
-    description: "This east-facing residential plot is located in the well-developed Mangalam City, Vatika, along Tonk Road—one of Jaipur's most prominent and fast-growing corridors.",
+    description: "This east-facing residential plot is located in the well-developed Mangalam City, Vatika, along Tonk Road—one of Jaipur's most prominent and fast-growing corridors. Front road size: 30 ft.",
     type: "Plot",
     images: 2,
     featured: false,
