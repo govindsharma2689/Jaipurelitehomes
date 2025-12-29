@@ -44,20 +44,11 @@ const Header = () => {
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
           {/* Logo */}
           <a href="/" className="flex items-center">
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <svg viewBox="0 0 60 40" className="w-14 h-10">
-                  <path d="M5 35 L30 10 L55 35" fill="none" stroke="#1e88e5" strokeWidth="3" />
-                  <path d="M12 35 L30 17 L48 35" fill="none" stroke="#1e88e5" strokeWidth="2" />
-                  <line x1="30" y1="10" x2="30" y2="5" stroke="#1e88e5" strokeWidth="2" />
-                </svg>
-              </div>
-              <div className="text-xs leading-tight hidden sm:block">
-                <span className="text-[#1e88e5] font-semibold">Jaipur Elite Homes</span>
-                <br />
-                <span className="text-gray-500 text-[10px]">Where Dreams Meet Luxury</span>
-              </div>
-            </div>
+            <img 
+              src="/images/logo/logo-dark.png" 
+              alt="Jaipur Elite Homes" 
+              className="h-12 w-auto"
+            />
           </a>
 
           {/* Desktop Navigation */}
