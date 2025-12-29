@@ -100,7 +100,7 @@ const PropertyDetailPage = () => {
   const propertySpecs = [
     { label: 'Property Type', value: property.type, icon: Home },
     { label: 'Category', value: 'Premium', icon: Sparkles },
-    { label: 'Photos', value: property.images, icon: Camera },
+    { label: 'Photos', value: property.images?.length || 0, icon: Camera },
     { label: 'Status', value: 'Ready', icon: Calendar },
   ];
 
