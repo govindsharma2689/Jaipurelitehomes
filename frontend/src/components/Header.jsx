@@ -45,9 +45,9 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="flex items-center">
             <img 
-              src="/images/logo/logo-dark.png" 
+              src="/images/logo/logo-dark-trimmed.png" 
               alt="Jaipur Elite Homes" 
-              className="h-16 md:h-20 w-auto"
+              className="h-14 md:h-16 w-auto"
             />
           </a>
 
