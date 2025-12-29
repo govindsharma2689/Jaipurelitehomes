@@ -13,11 +13,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo & About */}
           <div>
-            <a href="/" className="inline-block mb-4">
+            <a href="/" className="inline-block mb-6">
               <img 
                 src="/images/logo/logo-white.png" 
                 alt="Jaipur Elite Homes" 
-                className="h-14 w-auto"
+                className="h-20 md:h-24 w-auto"
               />
             </a>
             <p className="text-gray-400 text-sm mb-4">
