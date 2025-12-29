@@ -11,7 +11,7 @@ const PropertyCard = ({ property, index }) => {
     >
       <div className="relative h-56 img-zoom">
         <img 
-          src={property.image} 
+          src={property.images?.[0] || '/images/properties/default-plot.jpg'} 
           alt={property.title}
           className="w-full h-full object-cover"
         />
@@ -40,7 +40,7 @@ const PropertyCard = ({ property, index }) => {
           </div>
           <div className="flex items-center gap-1.5 text-white text-xs glass-dark px-3 py-1.5 rounded-full">
             <Camera size={12} />
-            <span>{property.images}</span>
+            <span>{property.images?.length || 0}</span>
           </div>
         </div>
       </div>
