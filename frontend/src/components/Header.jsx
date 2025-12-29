@@ -47,7 +47,7 @@ const Header = () => {
             <img 
               src="/images/logo/logo-dark.png" 
               alt="Jaipur Elite Homes" 
-              className="h-12 w-auto"
+              className="h-16 md:h-20 w-auto"
             />
           </a>
 
