@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Camera, Home, Grid3X3, ArrowRight } from 'lucide-react';
-import { properties } from '../data/mockData';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const PropertyCard = ({ property, index }) => {
   return (
@@ -64,6 +66,19 @@ const PropertyCard = ({ property, index }) => {
 
 const LatestPropertiesSection = () => {
   const [activeTab, setActiveTab] = useState('villas');
+  const [properties, setProperties] = useState([]);
+  
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/api/properties`);
+        setProperties(res.data);
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    };
+    fetchProperties();
+  }, []);
   
   const filteredProperties = properties.filter(p => 
     activeTab === 'villas' ? p.type === 'Villas' : p.type === 'Plot'
