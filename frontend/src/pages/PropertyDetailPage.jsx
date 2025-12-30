@@ -91,7 +91,7 @@ const PropertyDetailPage = () => {
     );
   }
 
-  const similarProperties = properties.filter(p => p.type === property.type && p.id !== property.id).slice(0, 3);
+  const similarProperties = allProperties.filter(p => p.type === property.type && p.id !== property.id).slice(0, 3);
 
   const handleSubmit = (e) => {
     e.preventDefault();
