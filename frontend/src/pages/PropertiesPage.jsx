@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { MapPin, Camera, ArrowRight, SlidersHorizontal } from 'lucide-react';
@@ -8,8 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { loadProperties } from '../utils/dataLoader';
 
 const PropertiesPage = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialType = queryParams.get('type') || '';
+  
   const [typeFilter, setTypeFilter] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(initialType);
   const [areaFilter, setAreaFilter] = useState('');
   const [sortBy, setSortBy] = useState('price-high');
   const [allProperties, setAllProperties] = useState([]);
@@ -29,6 +33,13 @@ const PropertiesPage = () => {
   useEffect(() => {
     fetchProperties();
   }, []);
+
+  // Update category filter when URL changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const type = params.get('type') || '';
+    setCategoryFilter(type);
+  }, [location.search]);
 
   // Helper function to parse price
   const parsePrice = (priceStr) => {
