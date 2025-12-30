@@ -11,9 +11,7 @@ import { contactInfo } from '../data/mockData';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import axios from 'axios';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+import { loadProperties, getPropertyById } from '../utils/dataLoader';
 
 const PropertyDetailPage = () => {
   const { id } = useParams();
@@ -41,11 +39,11 @@ const PropertyDetailPage = () => {
     const fetchProperty = async () => {
       try {
         // Fetch all properties for similar listings
-        const res = await axios.get(`${BACKEND_URL}/api/properties`);
-        setAllProperties(res.data);
+        const data = await loadProperties();
+        setAllProperties(data);
         
         // Find current property
-        const foundProperty = res.data.find(p => p.id === id || p.id === parseInt(id));
+        const foundProperty = await getPropertyById(id);
         if (foundProperty) {
           setProperty(foundProperty);
         }
