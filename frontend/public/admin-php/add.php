@@ -9,6 +9,40 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 $error = '';
 $success = '';
 
+// Handle image upload
+function uploadImages($files, $propertyId) {
+    $uploadedPaths = [];
+    $uploadDir = '../images/properties/prop-' . $propertyId . '/';
+    
+    // Create directory if it doesn't exist
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    
+    foreach ($files['tmp_name'] as $key => $tmpName) {
+        if ($files['error'][$key] === UPLOAD_ERR_OK) {
+            $originalName = $files['name'][$key];
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            
+            // Only allow image files
+            $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            if (!in_array($extension, $allowedTypes)) {
+                continue;
+            }
+            
+            // Generate unique filename
+            $newFileName = 'image-' . ($key + 1) . '.' . $extension;
+            $targetPath = $uploadDir . $newFileName;
+            
+            if (move_uploaded_file($tmpName, $targetPath)) {
+                $uploadedPaths[] = '/images/properties/prop-' . $propertyId . '/' . $newFileName;
+            }
+        }
+    }
+    
+    return $uploadedPaths;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $location = $_POST['location'] ?? '';
@@ -22,16 +56,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $featured = isset($_POST['featured']) ? 1 : 0;
     $status = $_POST['status'] ?? 'Sales';
     
-    // Handle image URLs (comma separated)
-    $imageUrls = array_filter(array_map('trim', explode("\n", $_POST['images'] ?? '')));
-    $imagesJson = json_encode($imageUrls);
+    // Get existing image URLs (if any)
+    $existingImages = array_filter(array_map('trim', explode("\n", $_POST['existing_images'] ?? '')));
     
     try {
+        // First insert to get the ID
         $stmt = $pdo->prepare("
             INSERT INTO properties (title, location, area, city, price, description, full_description, map_link, type, featured, status, images)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '[]')
         ");
-        $stmt->execute([$title, $location, $area, $city, $price, $description, $full_description, $map_link, $type, $featured, $status, $imagesJson]);
+        $stmt->execute([$title, $location, $area, $city, $price, $description, $full_description, $map_link, $type, $featured, $status]);
+        $propertyId = $pdo->lastInsertId();
+        
+        // Handle file uploads
+        $uploadedImages = [];
+        if (isset($_FILES['images']) && !empty($_FILES['images']['name'][0])) {
+            $uploadedImages = uploadImages($_FILES['images'], $propertyId);
+        }
+        
+        // Combine existing URLs and uploaded images
+        $allImages = array_merge($existingImages, $uploadedImages);
+        
+        // Update with images
+        $stmt = $pdo->prepare("UPDATE properties SET images = ? WHERE id = ?");
+        $stmt->execute([json_encode($allImages), $propertyId]);
+        
         header('Location: index.php?msg=saved');
         exit;
     } catch (Exception $e) {
@@ -62,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
         
-        <form method="POST" class="bg-white rounded-lg shadow p-6 space-y-4">
+        <form method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-6 space-y-4">
             <div>
                 <label class="block text-gray-700 mb-2">Title *</label>
                 <input type="text" name="title" required
@@ -134,10 +183,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div>
-                <label class="block text-gray-700 mb-2">Image URLs (one per line)</label>
-                <textarea name="images" rows="4" placeholder="/images/properties/prop-1/image-1.png"
+                <label class="block text-gray-700 mb-2">Upload Images</label>
+                <input type="file" name="images[]" multiple accept="image/*"
+                       class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p class="text-sm text-gray-500 mt-1">Select multiple images (JPG, PNG, GIF, WebP)</p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 mb-2">Or Enter Image URLs (one per line)</label>
+                <textarea name="existing_images" rows="3" placeholder="/images/properties/prop-1/image-1.png"
                           class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                <p class="text-sm text-gray-500 mt-1">Enter image paths relative to the website root</p>
             </div>
             
             <div>
