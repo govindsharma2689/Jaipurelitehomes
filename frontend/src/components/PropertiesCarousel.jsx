@@ -1,11 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, MapPin, Camera } from 'lucide-react';
-import { properties } from '../data/mockData';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const PropertiesCarousel = () => {
   const scrollRef = useRef(null);
-  const salesProperties = properties.slice(0, 10);
+  const [salesProperties, setSalesProperties] = useState([]);
+  
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/api/properties`);
+        setSalesProperties(res.data.slice(0, 10));
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    };
+    fetchProperties();
+  }, []);
   
   const scroll = (direction) => {
     if (scrollRef.current) {
