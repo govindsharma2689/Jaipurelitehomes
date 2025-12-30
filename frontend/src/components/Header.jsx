@@ -35,16 +35,22 @@ const Header = () => {
               <Mail size={14} />
               {contactInfo.email}
             </a>
-            {/* Rental Phone */}
+            {/* Sales Phone with Name - Desktop: First position */}
+            <a href={`tel:${contactInfo.phone}`} className="hidden md:flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Phone size={14} />
+              <span>{contactInfo.phone}</span>
+              <span className="text-white/90">- Mr. Hanuman Meena</span>
+            </a>
+            {/* Rental Phone - Desktop: Second position */}
             <a href={`tel:${contactInfo.rentalPhone}`} className="hidden md:flex items-center gap-2 hover:opacity-80 transition-opacity">
               <Phone size={14} />
               {contactInfo.rentalPhone} (Rental)
             </a>
-            {/* Sales Phone with Name - Always visible */}
-            <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-1 md:gap-2 hover:opacity-80 transition-opacity">
-              <Phone size={12} className="md:w-[14px] md:h-[14px]" />
+            {/* Mobile only - Sales Phone */}
+            <a href={`tel:${contactInfo.phone}`} className="flex md:hidden items-center gap-1 hover:opacity-80 transition-opacity">
+              <Phone size={12} />
               <span>{contactInfo.phone}</span>
-              <span className="text-white/90">- Hanuman Meena</span>
+              <span className="text-white/90">- Mr. Hanuman Meena</span>
             </a>
           </div>
         </div>
