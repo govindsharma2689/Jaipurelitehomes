@@ -5,10 +5,7 @@ import Footer from '../components/Footer';
 import { MapPin, Camera, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { areas, propertyCategories } from '../data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import axios from 'axios';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import { loadProperties } from '../utils/dataLoader';
 
 const PropertiesPage = () => {
   const [typeFilter, setTypeFilter] = useState('');
@@ -20,9 +17,8 @@ const PropertiesPage = () => {
 
   const fetchProperties = async () => {
     try {
-      const res = await axios.get(`${API}/properties`);
-      // Use only backend properties (no mock data)
-      setAllProperties(res.data);
+      const data = await loadProperties();
+      setAllProperties(data);
     } catch (error) {
       console.error('Error fetching properties:', error);
       setAllProperties([]);
