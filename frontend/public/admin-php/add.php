@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = $_POST['city'] ?? 'Jaipur';
     $price = $_POST['price'] ?? '';
     $description = $_POST['description'] ?? '';
+    $full_description = $_POST['full_description'] ?? '';
+    $map_link = $_POST['map_link'] ?? '';
     $type = $_POST['type'] ?? 'Plot';
     $featured = isset($_POST['featured']) ? 1 : 0;
     $status = $_POST['status'] ?? 'Sales';
@@ -26,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     try {
         $stmt = $pdo->prepare("
-            INSERT INTO properties (title, location, area, city, price, description, type, featured, status, images)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO properties (title, location, area, city, price, description, full_description, map_link, type, featured, status, images)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$title, $location, $area, $city, $price, $description, $type, $featured, $status, $imagesJson]);
+        $stmt->execute([$title, $location, $area, $city, $price, $description, $full_description, $map_link, $type, $featured, $status, $imagesJson]);
         header('Location: index.php?msg=saved');
         exit;
     } catch (Exception $e) {
@@ -111,9 +113,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div>
-                <label class="block text-gray-700 mb-2">Description</label>
-                <textarea name="description" rows="4"
-                          class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <label class="block text-gray-700 mb-2">Short Description</label>
+                <textarea name="description" rows="3"
+                          class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Brief description for property cards"></textarea>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 mb-2">Full Description</label>
+                <textarea name="full_description" rows="8"
+                          class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Detailed description with Location, Property Details, etc."></textarea>
+                <p class="text-sm text-gray-500 mt-1">Use line breaks for sections like Location:, Property Details:, etc.</p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 mb-2">Google Maps Link</label>
+                <input type="text" name="map_link" placeholder="https://maps.app.goo.gl/..."
+                       class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             
             <div>
