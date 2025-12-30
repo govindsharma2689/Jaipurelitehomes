@@ -341,9 +341,22 @@ const PropertyDetailPage = () => {
                     <MapPin size={28} className="text-[#1e88e5]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-800 text-lg">{property.location}</p>
+                    <p className="font-semibold text-gray-800 text-lg">{property.title}</p>
+                    <p className="text-gray-600">{property.location}</p>
                     <p className="text-gray-500">{property.area}, Jaipur</p>
                     <p className="text-gray-400 text-sm mt-1">Rajasthan, India</p>
+                    {/* Map Link */}
+                    {property.map_link && (
+                      <a 
+                        href={property.map_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 mt-3 text-[#1e88e5] font-medium hover:underline"
+                      >
+                        <MapPin size={16} />
+                        View on Google Maps
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
