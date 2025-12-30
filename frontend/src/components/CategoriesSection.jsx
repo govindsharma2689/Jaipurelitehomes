@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { categories } from '../data/mockData';
 
 const CategoriesSection = () => {
@@ -17,9 +18,9 @@ const CategoriesSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category, index) => (
-            <a
+            <Link
               key={category.id}
-              href={`/listings/${category.name.toLowerCase()}`}
+              to={`/properties?type=${category.name.toLowerCase()}`}
               className={`relative group overflow-hidden rounded-2xl card-premium shadow-premium ${
                 index < 3 ? 'h-72' : 'h-60'
               } animate-fade-in-up stagger-${index + 1}`}
@@ -48,7 +49,7 @@ const CategoriesSection = () => {
               <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-[#1e88e5] text-sm font-semibold">View All</span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
