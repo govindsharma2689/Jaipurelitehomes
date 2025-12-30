@@ -1,9 +1,9 @@
 <?php
 // Database configuration for Hostinger MySQL
 $host = 'localhost';
-$dbname = 'your_database_name'; // Change this
-$username = 'your_username';      // Change this
-$password = 'your_password';      // Change this
+$dbname = 'u264048598_jaipurelite';
+$username = 'u264048598_jaipurelite123';
+$password = '+csnQU#&o4S';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
