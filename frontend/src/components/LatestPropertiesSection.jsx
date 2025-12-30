@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Camera, Home, Grid3X3, ArrowRight } from 'lucide-react';
-import axios from 'axios';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+import { loadProperties } from '../utils/dataLoader';
 
 const PropertyCard = ({ property, index }) => {
   return (
@@ -71,8 +69,8 @@ const LatestPropertiesSection = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/properties`);
-        setProperties(res.data);
+        const data = await loadProperties();
+        setProperties(data);
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
