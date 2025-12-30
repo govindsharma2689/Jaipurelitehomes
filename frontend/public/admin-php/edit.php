@@ -24,6 +24,44 @@ if (!$property) {
 
 $error = '';
 
+// Handle image upload
+function uploadImages($files, $propertyId) {
+    $uploadedPaths = [];
+    $uploadDir = '../images/properties/prop-' . $propertyId . '/';
+    
+    // Create directory if it doesn't exist
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    
+    // Get existing files count to continue numbering
+    $existingFiles = glob($uploadDir . '*');
+    $startIndex = count($existingFiles) + 1;
+    
+    foreach ($files['tmp_name'] as $key => $tmpName) {
+        if ($files['error'][$key] === UPLOAD_ERR_OK) {
+            $originalName = $files['name'][$key];
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            
+            // Only allow image files
+            $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            if (!in_array($extension, $allowedTypes)) {
+                continue;
+            }
+            
+            // Generate unique filename
+            $newFileName = 'image-' . ($startIndex + $key) . '-' . time() . '.' . $extension;
+            $targetPath = $uploadDir . $newFileName;
+            
+            if (move_uploaded_file($tmpName, $targetPath)) {
+                $uploadedPaths[] = '/images/properties/prop-' . $propertyId . '/' . $newFileName;
+            }
+        }
+    }
+    
+    return $uploadedPaths;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $location = $_POST['location'] ?? '';
@@ -37,8 +75,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $featured = isset($_POST['featured']) ? 1 : 0;
     $status = $_POST['status'] ?? 'Sales';
     
-    $imageUrls = array_filter(array_map('trim', explode("\n", $_POST['images'] ?? '')));
-    $imagesJson = json_encode($imageUrls);
+    // Get kept images (existing ones user wants to keep)
+    $keptImages = $_POST['kept_images'] ?? [];
+    if (!is_array($keptImages)) {
+        $keptImages = [];
+    }
+    
+    // Handle new file uploads
+    $newUploadedImages = [];
+    if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
+        $newUploadedImages = uploadImages($_FILES['new_images'], $id);
+    }
+    
+    // Add any manually entered URLs
+    $manualUrls = array_filter(array_map('trim', explode("\n", $_POST['manual_urls'] ?? '')));
+    
+    // Combine all images
+    $allImages = array_merge($keptImages, $newUploadedImages, $manualUrls);
+    $imagesJson = json_encode(array_values($allImages));
     
     try {
         $stmt = $pdo->prepare("
@@ -73,14 +127,14 @@ $images = json_decode($property['images'], true) ?? [];
         </div>
     </nav>
     
-    <div class="max-w-3xl mx-auto p-6">
+    <div class="max-w-4xl mx-auto p-6">
         <?php if ($error): ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <?php echo htmlspecialchars($error); ?>
             </div>
         <?php endif; ?>
         
-        <form method="POST" class="bg-white rounded-lg shadow p-6 space-y-4">
+        <form method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-6 space-y-4">
             <div>
                 <label class="block text-gray-700 mb-2">Title *</label>
                 <input type="text" name="title" required value="<?php echo htmlspecialchars($property['title']); ?>"
@@ -152,10 +206,39 @@ $images = json_decode($property['images'], true) ?? [];
                        class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             
+            <!-- Current Images -->
+            <?php if (!empty($images)): ?>
             <div>
-                <label class="block text-gray-700 mb-2">Image URLs (one per line)</label>
-                <textarea name="images" rows="4"
-                          class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"><?php echo htmlspecialchars(implode("\n", $images)); ?></textarea>
+                <label class="block text-gray-700 mb-2">Current Images (<?php echo count($images); ?>)</label>
+                <p class="text-sm text-gray-500 mb-2">Uncheck to remove an image</p>
+                <div class="grid grid-cols-4 gap-4">
+                    <?php foreach ($images as $index => $img): ?>
+                    <div class="relative">
+                        <img src="<?php echo htmlspecialchars($img); ?>" alt="Image <?php echo $index + 1; ?>" 
+                             class="w-full h-24 object-cover rounded border">
+                        <label class="absolute top-1 right-1 bg-white rounded p-1 shadow">
+                            <input type="checkbox" name="kept_images[]" value="<?php echo htmlspecialchars($img); ?>" checked>
+                        </label>
+                        <span class="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-1 rounded">
+                            <?php echo $index + 1; ?>
+                        </span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+            
+            <div>
+                <label class="block text-gray-700 mb-2">Upload New Images</label>
+                <input type="file" name="new_images[]" multiple accept="image/*"
+                       class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p class="text-sm text-gray-500 mt-1">Select multiple images to add (JPG, PNG, GIF, WebP)</p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 mb-2">Or Add Image URLs (one per line)</label>
+                <textarea name="manual_urls" rows="2" placeholder="/images/properties/prop-1/new-image.png"
+                          class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
             </div>
             
             <div>
