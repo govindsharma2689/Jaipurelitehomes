@@ -44,7 +44,7 @@ const Header = () => {
             <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-1 md:gap-2 hover:opacity-80 transition-opacity">
               <Phone size={12} className="md:w-[14px] md:h-[14px]" />
               <span>{contactInfo.phone}</span>
-              <span className="text-white/90">- Hanuman Meena Ji</span>
+              <span className="text-white/90">- Hanuman Meena</span>
             </a>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { areas, heroData } from '../data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
@@ -6,6 +6,23 @@ import { Button } from './ui/button';
 
 const HeroSection = () => {
   const [activeTab, setActiveTab] = useState('sales');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Hero background images for rotation
+  const heroImages = [
+    '/images/properties/prop-1/image-1.png',
+    '/images/properties/prop-2/image-1.jpg',
+    '/images/properties/prop-4/image-1.png',
+    '/images/properties/prop-1/image-5.png',
+  ];
+  
+  // Auto-rotate images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
   
   // Sales filters
   const [salesPropertyType, setSalesPropertyType] = useState('');
