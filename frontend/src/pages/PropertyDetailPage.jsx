@@ -288,13 +288,20 @@ const PropertyDetailPage = () => {
                 </div>
                 <h2 className="text-2xl font-display font-bold text-gray-800">About This Property</h2>
               </div>
-              <p className="text-gray-600 leading-relaxed text-lg mb-4">{property.description}</p>
-              <p className="text-gray-600 leading-relaxed">
-                This exceptional property offers an unparalleled living experience in one of Jaipur&apos;s most sought-after locations. 
-                With meticulous attention to detail and premium finishes throughout, this property represents the perfect blend 
-                of luxury, comfort, and investment potential. The strategic location ensures excellent connectivity to major 
-                landmarks, educational institutions, healthcare facilities, and commercial centers.
-              </p>
+              {/* Full Description - properly formatted */}
+              {property.full_description ? (
+                <div className="text-gray-600 leading-relaxed space-y-4">
+                  {property.full_description.split('\n').map((paragraph, index) => (
+                    paragraph.trim() && (
+                      <p key={index} className={paragraph.includes(':') && paragraph.length < 80 ? 'font-semibold text-gray-800' : ''}>
+                        {paragraph}
+                      </p>
+                    )
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-600 leading-relaxed text-lg">{property.description}</p>
+              )}
             </div>
 
             {/* Features Grid */}
