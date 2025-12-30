@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { MapPin, Camera, ArrowRight, SlidersHorizontal } from 'lucide-react';
-import { properties, areas, propertyCategories } from '../data/mockData';
+import { areas, propertyCategories } from '../data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import axios from 'axios';
 
@@ -21,15 +21,11 @@ const PropertiesPage = () => {
   const fetchProperties = async () => {
     try {
       const res = await axios.get(`${API}/properties`);
-      // Combine backend properties with mock data
-      const backendProps = res.data.map(p => ({
-        ...p,
-        images: p.images_count || 1
-      }));
-      setAllProperties([...backendProps, ...properties]);
+      // Use only backend properties (no mock data)
+      setAllProperties(res.data);
     } catch (error) {
-      // Fallback to mock data if backend fails
-      setAllProperties(properties);
+      console.error('Error fetching properties:', error);
+      setAllProperties([]);
     }
     setLoading(false);
   };
