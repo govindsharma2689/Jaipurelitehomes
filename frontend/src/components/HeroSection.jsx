@@ -8,12 +8,12 @@ const HeroSection = () => {
   const [activeTab, setActiveTab] = useState('sales');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Hero background images for rotation
+  // Hero background images for rotation - Stock luxury property images
   const heroImages = [
-    '/images/properties/prop-1/image-1.png',
-    '/images/properties/prop-2/image-1.jpg',
-    '/images/properties/prop-4/image-1.png',
-    '/images/properties/prop-1/image-5.png',
+    'https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?auto=format&fit=crop&w=1920&q=80',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80',
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80',
+    'https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&w=1920&q=80',
   ];
   
   // Auto-rotate images every 5 seconds
