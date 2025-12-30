@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS properties (
     city VARCHAR(100) DEFAULT 'Jaipur',
     price VARCHAR(100),
     description TEXT,
+    full_description TEXT,
+    map_link VARCHAR(500),
     type ENUM('Villas', 'Plot') DEFAULT 'Plot',
     featured BOOLEAN DEFAULT FALSE,
     status ENUM('Sales', 'Rentals') DEFAULT 'Sales',
