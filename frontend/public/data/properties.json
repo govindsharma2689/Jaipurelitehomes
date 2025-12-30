@@ -80,11 +80,11 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/default-plot.jpg"
+      "/images/properties/prop-3/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/default-plot.jpg",
+    "image": "/images/properties/prop-3/image-1.jpg",
     "images_count": 1
   },
   {
@@ -118,16 +118,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-5/image-1.png",
-      "/images/properties/prop-5/image-2.png",
-      "/images/properties/prop-5/image-3.jpg",
-      "/images/properties/prop-5/image-4.png",
-      "/images/properties/prop-5/image-5.png"
+      "/images/properties/prop-5/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-5/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-5/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "6",
@@ -141,16 +137,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-6/image-1.png",
-      "/images/properties/prop-6/image-2.png",
-      "/images/properties/prop-6/image-3.jpg",
-      "/images/properties/prop-6/image-4.png",
-      "/images/properties/prop-6/image-5.png"
+      "/images/properties/prop-6/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-6/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-6/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "7",
@@ -164,16 +156,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-7/image-1.png",
-      "/images/properties/prop-7/image-2.png",
-      "/images/properties/prop-7/image-3.jpg",
-      "/images/properties/prop-7/image-4.png",
-      "/images/properties/prop-7/image-5.png"
+      "/images/properties/prop-7/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-7/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-7/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "8",
@@ -187,16 +175,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-8/image-1.png",
-      "/images/properties/prop-8/image-2.png",
-      "/images/properties/prop-8/image-3.jpg",
-      "/images/properties/prop-8/image-4.png",
-      "/images/properties/prop-8/image-5.png"
+      "/images/properties/prop-8/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-8/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-8/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "9",
@@ -210,16 +194,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-9/image-1.png",
-      "/images/properties/prop-9/image-2.png",
-      "/images/properties/prop-9/image-3.jpg",
-      "/images/properties/prop-9/image-4.png",
-      "/images/properties/prop-9/image-5.png"
+      "/images/properties/prop-9/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-9/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-9/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "10",
@@ -233,16 +213,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-10/image-1.png",
-      "/images/properties/prop-10/image-2.png",
-      "/images/properties/prop-10/image-3.jpg",
-      "/images/properties/prop-10/image-4.png",
-      "/images/properties/prop-10/image-5.png"
+      "/images/properties/prop-10/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-10/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-10/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "11",
@@ -256,16 +232,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-11/image-1.png",
-      "/images/properties/prop-11/image-2.png",
-      "/images/properties/prop-11/image-3.jpg",
-      "/images/properties/prop-11/image-4.png",
-      "/images/properties/prop-11/image-5.png"
+      "/images/properties/prop-11/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-11/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-11/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "12",
@@ -279,16 +251,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-12/image-1.png",
-      "/images/properties/prop-12/image-2.png",
-      "/images/properties/prop-12/image-3.jpg",
-      "/images/properties/prop-12/image-4.png",
-      "/images/properties/prop-12/image-5.png"
+      "/images/properties/prop-12/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-12/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-12/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "13",
@@ -302,16 +270,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-13/image-1.png",
-      "/images/properties/prop-13/image-2.png",
-      "/images/properties/prop-13/image-3.jpg",
-      "/images/properties/prop-13/image-4.png",
-      "/images/properties/prop-13/image-5.png"
+      "/images/properties/prop-13/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-13/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-13/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "14",
@@ -325,16 +289,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-14/image-1.png",
-      "/images/properties/prop-14/image-2.png",
-      "/images/properties/prop-14/image-3.jpg",
-      "/images/properties/prop-14/image-4.png",
-      "/images/properties/prop-14/image-5.png"
+      "/images/properties/prop-14/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-14/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-14/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "15",
@@ -348,16 +308,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-15/image-1.png",
-      "/images/properties/prop-15/image-2.png",
-      "/images/properties/prop-15/image-3.jpg",
-      "/images/properties/prop-15/image-4.png",
-      "/images/properties/prop-15/image-5.png"
+      "/images/properties/prop-15/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-15/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-15/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "16",
@@ -371,16 +327,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-16/image-1.png",
-      "/images/properties/prop-16/image-2.png",
-      "/images/properties/prop-16/image-3.jpg",
-      "/images/properties/prop-16/image-4.png",
-      "/images/properties/prop-16/image-5.png"
+      "/images/properties/prop-16/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-16/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-16/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "17",
@@ -394,16 +346,12 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-17/image-1.png",
-      "/images/properties/prop-17/image-2.png",
-      "/images/properties/prop-17/image-3.png",
-      "/images/properties/prop-17/image-4.png",
-      "/images/properties/prop-17/image-5.jpg"
+      "/images/properties/prop-17/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-17/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-17/image-1.jpg",
+    "images_count": 1
   },
   {
     "id": "18",
@@ -417,15 +365,11 @@
     "featured": false,
     "status": "Sales",
     "images": [
-      "/images/properties/prop-18/image-1.png",
-      "/images/properties/prop-18/image-2.png",
-      "/images/properties/prop-18/image-3.jpg",
-      "/images/properties/prop-18/image-4.png",
-      "/images/properties/prop-18/image-5.png"
+      "/images/properties/prop-18/image-1.jpg"
     ],
     "created_at": "2025-12-30 09:07:16.645000",
     "updated_at": "2025-12-30 09:07:16.645000",
-    "image": "/images/properties/prop-18/image-1.png",
-    "images_count": 5
+    "image": "/images/properties/prop-18/image-1.jpg",
+    "images_count": 1
   }
 ]
