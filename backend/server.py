@@ -43,6 +43,7 @@ class PropertyBase(BaseModel):
     featured: bool = False
     status: str = "Sales"  # "Sales" or "Rentals"
     image: Optional[str] = None
+    images: Optional[List[str]] = []
     images_count: int = 1
 
 
@@ -61,6 +62,7 @@ class PropertyUpdate(BaseModel):
     featured: Optional[bool] = None
     status: Optional[str] = None
     image: Optional[str] = None
+    images: Optional[List[str]] = None
     images_count: Optional[int] = None
 
 
