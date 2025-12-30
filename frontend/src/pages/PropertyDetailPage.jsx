@@ -7,14 +7,18 @@ import {
   Calendar, Check, ChevronLeft, ChevronRight, MessageCircle, 
   Building, Ruler, Compass, ArrowRight, Sparkles, ZoomIn
 } from 'lucide-react';
-import { properties, contactInfo } from '../data/mockData';
+import { contactInfo } from '../data/mockData';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const PropertyDetailPage = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
+  const [allProperties, setAllProperties] = useState([]);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -34,10 +38,22 @@ const PropertyDetailPage = () => {
   };
 
   useEffect(() => {
-    const foundProperty = properties.find(p => p.id === parseInt(id));
-    if (foundProperty) {
-      setProperty(foundProperty);
-    }
+    const fetchProperty = async () => {
+      try {
+        // Fetch all properties for similar listings
+        const res = await axios.get(`${BACKEND_URL}/api/properties`);
+        setAllProperties(res.data);
+        
+        // Find current property
+        const foundProperty = res.data.find(p => p.id === id || p.id === parseInt(id));
+        if (foundProperty) {
+          setProperty(foundProperty);
+        }
+      } catch (error) {
+        console.error('Error fetching property:', error);
+      }
+    };
+    fetchProperty();
     window.scrollTo(0, 0);
   }, [id]);
 
